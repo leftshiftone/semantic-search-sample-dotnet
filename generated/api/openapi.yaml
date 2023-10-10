@@ -1,0 +1,394 @@
+openapi: 3.0.3
+info:
+  contact:
+    email: contact@leftshift.one
+  description: |
+    The indexer component HTTP API of the semantic search service.
+
+    The service depends on a database backend. If a mere vector store (e.g. [Qdrant](https://qdrant.tech/)), instead of a full fledged search engine (e.g. [Elasticsearch](https://www.elastic.co/)), is configured, some advanced functionalities of the API have no effect. This is noted where appropriate, referring to the former as _simple database_ and the latter as _full database_.
+  title: Semantic Search - Indexer HTTP API
+  version: 1.5.0
+servers:
+- url: /api/v1
+tags:
+- description: Index endpoints
+  name: Index
+paths:
+  /index:
+    get:
+      description: List all indices
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListAllIndicesResponse'
+          description: Plain list of all indices.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The provided input was wrong.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error.
+      tags:
+      - Index
+    post:
+      description: Create an index
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateIndexRequest'
+        description: The index definition.
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IndexResponse'
+          description: The created index definition.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The provided input was wrong.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error.
+      tags:
+      - Index
+  /index/{index_name}:
+    delete:
+      description: Delete an entire index
+      parameters:
+      - explode: false
+        in: path
+        name: index_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "If set to \"true\", delete index even if it is not empty."
+        explode: true
+        in: query
+        name: force
+        required: false
+        schema:
+          default: "false"
+          enum:
+          - "true"
+          - "false"
+          type: string
+        style: form
+      responses:
+        "204":
+          description: Index has been deleted.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error.
+      tags:
+      - Index
+  /index/{index_name}/documents:
+    post:
+      description: Trigger indexing of document information.
+      parameters:
+      - explode: false
+        in: path
+        name: index_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: doc_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDocumentRequest'
+      responses:
+        "204":
+          description: Document has been indexed.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error.
+      tags:
+      - Index
+  /index/{index_name}/documents/{doc_id}:
+    delete:
+      description: Delete an indexed documents.
+      parameters:
+      - explode: false
+        in: path
+        name: index_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: doc_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Document has been deleted from the index.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The specified resource was not found.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: An unexpected error.
+      tags:
+      - Index
+components:
+  parameters:
+    path_index_name:
+      explode: false
+      in: path
+      name: index_name
+      required: true
+      schema:
+        type: string
+      style: simple
+    path_doc_id:
+      explode: false
+      in: path
+      name: doc_id
+      required: true
+      schema:
+        type: string
+      style: simple
+  responses:
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+      description: The provided input was wrong.
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+      description: The specified resource was not found.
+    Unexpected:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+      description: An unexpected error.
+  schemas:
+    CreateIndexRequest:
+      description: |
+        Create a new index with given field type mapping. Default fields document_id_, content_text_ and file_name_ are added automatically.
+
+        > **_NOTE:_**  For simple database backends, the field mapping has no effect at the moment.
+      example:
+        name: name
+        fields:
+        - type: BOOLEAN
+          field_name: field_name
+        - type: BOOLEAN
+          field_name: field_name
+      properties:
+        name:
+          description: The index name.
+          type: string
+        fields:
+          items:
+            $ref: '#/components/schemas/IndexFieldMapping'
+          type: array
+      required:
+      - fields
+      - name
+      type: object
+    IndexFieldMapping:
+      example:
+        type: BOOLEAN
+        field_name: field_name
+      properties:
+        field_name:
+          description: The name of the field.
+          type: string
+        type:
+          description: |
+            The data type of the field. Possible values:
+              * BOOLEAN, INTEGER, FLOAT: The familiar data types.
+              * TIMESTAMP: Formatted either as yyyy-MM-ddTHH:mm:ss.SSSSSSZ or yyyy-MM-dd
+              * JSON: A general, structured element.
+              * GEO_POINT: Latitude and longitude coordinates
+              * KEYWORD: Text field, which is not analyzed. Suited for filter queries.
+              * TEXT: Text field, which is analyzed as well as (possibly) semantically embedded. Suited for full text and semantic search.
+          enum:
+          - BOOLEAN
+          - INTEGER
+          - FLOAT
+          - TIMESTAMP
+          - KEYWORD
+          - TEXT
+          - JSON
+          - GEO_POINT
+          type: string
+      required:
+      - field_name
+      - type
+      type: object
+    IndexResponse:
+      example:
+        name: name
+        fields:
+        - type: BOOLEAN
+          field_name: field_name
+        - type: BOOLEAN
+          field_name: field_name
+      properties:
+        name:
+          description: The index name.
+          type: string
+        fields:
+          items:
+            $ref: '#/components/schemas/IndexFieldMapping'
+          type: array
+      required:
+      - fields
+      - name
+      type: object
+    ListAllIndicesResponse:
+      example:
+        indices:
+        - indices
+        - indices
+      properties:
+        indices:
+          description: List of the names of all indices.
+          items:
+            type: string
+          type: array
+      required:
+      - indices
+      type: object
+    ErrorResponse:
+      properties:
+        message:
+          description: The error message.
+          type: string
+        type:
+          description: The type of the error in the backend.
+          type: string
+      required:
+      - message
+      - type
+      type: object
+    CreateDocumentRequest:
+      description: Index a document with given external id according to the specified
+        settings.
+      example:
+        document_index_settings:
+          semantic_fields:
+          - semantic_fields
+          - semantic_fields
+          sentence_overlap: 0
+          sentence_count: 1
+          min_chars: 0
+          delete_source: true
+          split_sentences: true
+        document_id: document_id
+      properties:
+        document_id:
+          description: The id of the document to be indexed.
+          type: string
+        document_index_settings:
+          $ref: '#/components/schemas/DocumentIndexSettings'
+      required:
+      - document_id
+      type: object
+    DocumentIndexSettings:
+      example:
+        semantic_fields:
+        - semantic_fields
+        - semantic_fields
+        sentence_overlap: 0
+        sentence_count: 1
+        min_chars: 0
+        delete_source: true
+        split_sentences: true
+      properties:
+        split_sentences:
+          default: true
+          description: Whether to split the document into sentences.
+          type: boolean
+        sentence_count:
+          default: 3
+          description: The number of sentences to group and index together.
+          minimum: 1
+          type: integer
+        sentence_overlap:
+          default: 1
+          description: The number of sentences consecutive sentence groups overlap.
+          minimum: 0
+          type: integer
+        min_chars:
+          default: 1
+          description: "The minimum number of characters a sentence group must contain.\
+            \ If the length of a sentence group is below this value, additional sentences\
+            \ are added until this requirement is fulfilled."
+          minimum: 0
+          type: integer
+        semantic_fields:
+          default:
+          - content_text_
+          description: |
+            The names of text fields, which should be semantically embedded. The default value 'content_text_' refers to the raw document text content.
+
+            > **_NOTE:_**  For simple database backends, only the default content_text_ is semantically embedded at the moment.
+          items:
+            type: string
+          type: array
+        delete_source:
+          default: true
+          description: Delete the source files belonging to that document.
+          type: boolean
+      type: object
+

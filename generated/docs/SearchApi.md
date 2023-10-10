@@ -4,11 +4,11 @@ All URIs are relative to */api/v1*
 
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
-| [**SearchIndexNamePost**](SearchApi.md#searchindexnamepost) | **POST** /search/{index_name} |  |
+| [**SearchIndex**](SearchApi.md#searchindex) | **POST** /search/{index_name} |  |
 
-<a id="searchindexnamepost"></a>
-# **SearchIndexNamePost**
-> SearchResultsResponse SearchIndexNamePost (string indexName, SearchQueryRequest? searchQueryRequest = null)
+<a id="searchindex"></a>
+# **SearchIndex**
+> SearchResultsResponse SearchIndex (string indexName, SearchQueryRequest? searchQueryRequest = null)
 
 
 
@@ -24,7 +24,7 @@ using LSO.SemanticSearch.Model;
 
 namespace Example
 {
-    public class SearchIndexNamePostExample
+    public class SearchIndexExample
     {
         public static void Main()
         {
@@ -36,12 +36,12 @@ namespace Example
 
             try
             {
-                SearchResultsResponse result = apiInstance.SearchIndexNamePost(indexName, searchQueryRequest);
+                SearchResultsResponse result = apiInstance.SearchIndex(indexName, searchQueryRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
-                Debug.Print("Exception when calling SearchApi.SearchIndexNamePost: " + e.Message);
+                Debug.Print("Exception when calling SearchApi.SearchIndex: " + e.Message);
                 Debug.Print("Status Code: " + e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
@@ -50,20 +50,20 @@ namespace Example
 }
 ```
 
-#### Using the SearchIndexNamePostWithHttpInfo variant
+#### Using the SearchIndexWithHttpInfo variant
 This returns an ApiResponse object which contains the response data, status code and headers.
 
 ```csharp
 try
 {
-    ApiResponse<SearchResultsResponse> response = apiInstance.SearchIndexNamePostWithHttpInfo(indexName, searchQueryRequest);
+    ApiResponse<SearchResultsResponse> response = apiInstance.SearchIndexWithHttpInfo(indexName, searchQueryRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
-    Debug.Print("Exception when calling SearchApi.SearchIndexNamePostWithHttpInfo: " + e.Message);
+    Debug.Print("Exception when calling SearchApi.SearchIndexWithHttpInfo: " + e.Message);
     Debug.Print("Status Code: " + e.ErrorCode);
     Debug.Print(e.StackTrace);
 }

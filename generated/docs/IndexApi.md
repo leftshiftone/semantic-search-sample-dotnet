@@ -4,279 +4,15 @@ All URIs are relative to */api/v1*
 
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
-| [**IndexGet**](IndexApi.md#indexget) | **GET** /index |  |
-| [**IndexIndexNameDelete**](IndexApi.md#indexindexnamedelete) | **DELETE** /index/{index_name} |  |
-| [**IndexIndexNameDocumentsDocIdDelete**](IndexApi.md#indexindexnamedocumentsdociddelete) | **DELETE** /index/{index_name}/documents/{doc_id} |  |
-| [**IndexIndexNameDocumentsPost**](IndexApi.md#indexindexnamedocumentspost) | **POST** /index/{index_name}/documents |  |
-| [**IndexPost**](IndexApi.md#indexpost) | **POST** /index |  |
+| [**CreateDocument**](IndexApi.md#createdocument) | **POST** /index/{index_name}/documents |  |
+| [**CreateIndex**](IndexApi.md#createindex) | **POST** /index |  |
+| [**DeleteDocument**](IndexApi.md#deletedocument) | **DELETE** /index/{index_name}/documents/{doc_id} |  |
+| [**DeleteIndex**](IndexApi.md#deleteindex) | **DELETE** /index/{index_name} |  |
+| [**ListIndices**](IndexApi.md#listindices) | **GET** /index |  |
 
-<a id="indexget"></a>
-# **IndexGet**
-> ListAllIndicesResponse IndexGet ()
-
-
-
-List all indices
-
-### Example
-```csharp
-using System.Collections.Generic;
-using System.Diagnostics;
-using LSO.SemanticSearch.Api;
-using LSO.SemanticSearch.Client;
-using LSO.SemanticSearch.Model;
-
-namespace Example
-{
-    public class IndexGetExample
-    {
-        public static void Main()
-        {
-            Configuration config = new Configuration();
-            config.BasePath = "/api/v1";
-            var apiInstance = new IndexApi(config);
-
-            try
-            {
-                ListAllIndicesResponse result = apiInstance.IndexGet();
-                Debug.WriteLine(result);
-            }
-            catch (ApiException  e)
-            {
-                Debug.Print("Exception when calling IndexApi.IndexGet: " + e.Message);
-                Debug.Print("Status Code: " + e.ErrorCode);
-                Debug.Print(e.StackTrace);
-            }
-        }
-    }
-}
-```
-
-#### Using the IndexGetWithHttpInfo variant
-This returns an ApiResponse object which contains the response data, status code and headers.
-
-```csharp
-try
-{
-    ApiResponse<ListAllIndicesResponse> response = apiInstance.IndexGetWithHttpInfo();
-    Debug.Write("Status Code: " + response.StatusCode);
-    Debug.Write("Response Headers: " + response.Headers);
-    Debug.Write("Response Body: " + response.Data);
-}
-catch (ApiException e)
-{
-    Debug.Print("Exception when calling IndexApi.IndexGetWithHttpInfo: " + e.Message);
-    Debug.Print("Status Code: " + e.ErrorCode);
-    Debug.Print(e.StackTrace);
-}
-```
-
-### Parameters
-This endpoint does not need any parameter.
-### Return type
-
-[**ListAllIndicesResponse**](ListAllIndicesResponse.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | Plain list of all indices. |  -  |
-| **400** | The provided input was wrong. |  -  |
-| **500** | An unexpected error. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-<a id="indexindexnamedelete"></a>
-# **IndexIndexNameDelete**
-> void IndexIndexNameDelete (string indexName, string? force = null)
-
-
-
-Delete an entire index
-
-### Example
-```csharp
-using System.Collections.Generic;
-using System.Diagnostics;
-using LSO.SemanticSearch.Api;
-using LSO.SemanticSearch.Client;
-using LSO.SemanticSearch.Model;
-
-namespace Example
-{
-    public class IndexIndexNameDeleteExample
-    {
-        public static void Main()
-        {
-            Configuration config = new Configuration();
-            config.BasePath = "/api/v1";
-            var apiInstance = new IndexApi(config);
-            var indexName = "indexName_example";  // string | 
-            var force = "true";  // string? | If set to \"true\", delete index even if it is not empty. (optional)  (default to false)
-
-            try
-            {
-                apiInstance.IndexIndexNameDelete(indexName, force);
-            }
-            catch (ApiException  e)
-            {
-                Debug.Print("Exception when calling IndexApi.IndexIndexNameDelete: " + e.Message);
-                Debug.Print("Status Code: " + e.ErrorCode);
-                Debug.Print(e.StackTrace);
-            }
-        }
-    }
-}
-```
-
-#### Using the IndexIndexNameDeleteWithHttpInfo variant
-This returns an ApiResponse object which contains the response data, status code and headers.
-
-```csharp
-try
-{
-    apiInstance.IndexIndexNameDeleteWithHttpInfo(indexName, force);
-}
-catch (ApiException e)
-{
-    Debug.Print("Exception when calling IndexApi.IndexIndexNameDeleteWithHttpInfo: " + e.Message);
-    Debug.Print("Status Code: " + e.ErrorCode);
-    Debug.Print(e.StackTrace);
-}
-```
-
-### Parameters
-
-| Name | Type | Description | Notes |
-|------|------|-------------|-------|
-| **indexName** | **string** |  |  |
-| **force** | **string?** | If set to \&quot;true\&quot;, delete index even if it is not empty. | [optional] [default to false] |
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **204** | Index has been deleted. |  -  |
-| **404** | The specified resource was not found. |  -  |
-| **500** | An unexpected error. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-<a id="indexindexnamedocumentsdociddelete"></a>
-# **IndexIndexNameDocumentsDocIdDelete**
-> void IndexIndexNameDocumentsDocIdDelete (string indexName, string docId)
-
-
-
-Delete an indexed documents.
-
-### Example
-```csharp
-using System.Collections.Generic;
-using System.Diagnostics;
-using LSO.SemanticSearch.Api;
-using LSO.SemanticSearch.Client;
-using LSO.SemanticSearch.Model;
-
-namespace Example
-{
-    public class IndexIndexNameDocumentsDocIdDeleteExample
-    {
-        public static void Main()
-        {
-            Configuration config = new Configuration();
-            config.BasePath = "/api/v1";
-            var apiInstance = new IndexApi(config);
-            var indexName = "indexName_example";  // string | 
-            var docId = "docId_example";  // string | 
-
-            try
-            {
-                apiInstance.IndexIndexNameDocumentsDocIdDelete(indexName, docId);
-            }
-            catch (ApiException  e)
-            {
-                Debug.Print("Exception when calling IndexApi.IndexIndexNameDocumentsDocIdDelete: " + e.Message);
-                Debug.Print("Status Code: " + e.ErrorCode);
-                Debug.Print(e.StackTrace);
-            }
-        }
-    }
-}
-```
-
-#### Using the IndexIndexNameDocumentsDocIdDeleteWithHttpInfo variant
-This returns an ApiResponse object which contains the response data, status code and headers.
-
-```csharp
-try
-{
-    apiInstance.IndexIndexNameDocumentsDocIdDeleteWithHttpInfo(indexName, docId);
-}
-catch (ApiException e)
-{
-    Debug.Print("Exception when calling IndexApi.IndexIndexNameDocumentsDocIdDeleteWithHttpInfo: " + e.Message);
-    Debug.Print("Status Code: " + e.ErrorCode);
-    Debug.Print(e.StackTrace);
-}
-```
-
-### Parameters
-
-| Name | Type | Description | Notes |
-|------|------|-------------|-------|
-| **indexName** | **string** |  |  |
-| **docId** | **string** |  |  |
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **204** | Document has been deleted from the index. |  -  |
-| **404** | The specified resource was not found. |  -  |
-| **500** | An unexpected error. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-<a id="indexindexnamedocumentspost"></a>
-# **IndexIndexNameDocumentsPost**
-> void IndexIndexNameDocumentsPost (string indexName, string docId, CreateDocumentRequest? createDocumentRequest = null)
+<a id="createdocument"></a>
+# **CreateDocument**
+> void CreateDocument (string indexName, string docId, CreateDocumentRequest? createDocumentRequest = null)
 
 
 
@@ -292,7 +28,7 @@ using LSO.SemanticSearch.Model;
 
 namespace Example
 {
-    public class IndexIndexNameDocumentsPostExample
+    public class CreateDocumentExample
     {
         public static void Main()
         {
@@ -305,11 +41,11 @@ namespace Example
 
             try
             {
-                apiInstance.IndexIndexNameDocumentsPost(indexName, docId, createDocumentRequest);
+                apiInstance.CreateDocument(indexName, docId, createDocumentRequest);
             }
             catch (ApiException  e)
             {
-                Debug.Print("Exception when calling IndexApi.IndexIndexNameDocumentsPost: " + e.Message);
+                Debug.Print("Exception when calling IndexApi.CreateDocument: " + e.Message);
                 Debug.Print("Status Code: " + e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
@@ -318,17 +54,17 @@ namespace Example
 }
 ```
 
-#### Using the IndexIndexNameDocumentsPostWithHttpInfo variant
+#### Using the CreateDocumentWithHttpInfo variant
 This returns an ApiResponse object which contains the response data, status code and headers.
 
 ```csharp
 try
 {
-    apiInstance.IndexIndexNameDocumentsPostWithHttpInfo(indexName, docId, createDocumentRequest);
+    apiInstance.CreateDocumentWithHttpInfo(indexName, docId, createDocumentRequest);
 }
 catch (ApiException e)
 {
-    Debug.Print("Exception when calling IndexApi.IndexIndexNameDocumentsPostWithHttpInfo: " + e.Message);
+    Debug.Print("Exception when calling IndexApi.CreateDocumentWithHttpInfo: " + e.Message);
     Debug.Print("Status Code: " + e.ErrorCode);
     Debug.Print(e.StackTrace);
 }
@@ -365,9 +101,9 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a id="indexpost"></a>
-# **IndexPost**
-> IndexResponse IndexPost (CreateIndexRequest? createIndexRequest = null)
+<a id="createindex"></a>
+# **CreateIndex**
+> IndexResponse CreateIndex (CreateIndexRequest? createIndexRequest = null)
 
 
 
@@ -383,7 +119,7 @@ using LSO.SemanticSearch.Model;
 
 namespace Example
 {
-    public class IndexPostExample
+    public class CreateIndexExample
     {
         public static void Main()
         {
@@ -394,12 +130,12 @@ namespace Example
 
             try
             {
-                IndexResponse result = apiInstance.IndexPost(createIndexRequest);
+                IndexResponse result = apiInstance.CreateIndex(createIndexRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
-                Debug.Print("Exception when calling IndexApi.IndexPost: " + e.Message);
+                Debug.Print("Exception when calling IndexApi.CreateIndex: " + e.Message);
                 Debug.Print("Status Code: " + e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
@@ -408,20 +144,20 @@ namespace Example
 }
 ```
 
-#### Using the IndexPostWithHttpInfo variant
+#### Using the CreateIndexWithHttpInfo variant
 This returns an ApiResponse object which contains the response data, status code and headers.
 
 ```csharp
 try
 {
-    ApiResponse<IndexResponse> response = apiInstance.IndexPostWithHttpInfo(createIndexRequest);
+    ApiResponse<IndexResponse> response = apiInstance.CreateIndexWithHttpInfo(createIndexRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
-    Debug.Print("Exception when calling IndexApi.IndexPostWithHttpInfo: " + e.Message);
+    Debug.Print("Exception when calling IndexApi.CreateIndexWithHttpInfo: " + e.Message);
     Debug.Print("Status Code: " + e.ErrorCode);
     Debug.Print(e.StackTrace);
 }
@@ -451,6 +187,270 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | The created index definition. |  -  |
+| **400** | The provided input was wrong. |  -  |
+| **500** | An unexpected error. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a id="deletedocument"></a>
+# **DeleteDocument**
+> void DeleteDocument (string indexName, string docId)
+
+
+
+Delete an indexed documents.
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using LSO.SemanticSearch.Api;
+using LSO.SemanticSearch.Client;
+using LSO.SemanticSearch.Model;
+
+namespace Example
+{
+    public class DeleteDocumentExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "/api/v1";
+            var apiInstance = new IndexApi(config);
+            var indexName = "indexName_example";  // string | 
+            var docId = "docId_example";  // string | 
+
+            try
+            {
+                apiInstance.DeleteDocument(indexName, docId);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling IndexApi.DeleteDocument: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+#### Using the DeleteDocumentWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    apiInstance.DeleteDocumentWithHttpInfo(indexName, docId);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling IndexApi.DeleteDocumentWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **indexName** | **string** |  |  |
+| **docId** | **string** |  |  |
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **204** | Document has been deleted from the index. |  -  |
+| **404** | The specified resource was not found. |  -  |
+| **500** | An unexpected error. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a id="deleteindex"></a>
+# **DeleteIndex**
+> void DeleteIndex (string indexName, string? force = null)
+
+
+
+Delete an entire index
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using LSO.SemanticSearch.Api;
+using LSO.SemanticSearch.Client;
+using LSO.SemanticSearch.Model;
+
+namespace Example
+{
+    public class DeleteIndexExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "/api/v1";
+            var apiInstance = new IndexApi(config);
+            var indexName = "indexName_example";  // string | 
+            var force = "true";  // string? | If set to \"true\", delete index even if it is not empty. (optional)  (default to false)
+
+            try
+            {
+                apiInstance.DeleteIndex(indexName, force);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling IndexApi.DeleteIndex: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+#### Using the DeleteIndexWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    apiInstance.DeleteIndexWithHttpInfo(indexName, force);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling IndexApi.DeleteIndexWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **indexName** | **string** |  |  |
+| **force** | **string?** | If set to \&quot;true\&quot;, delete index even if it is not empty. | [optional] [default to false] |
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **204** | Index has been deleted. |  -  |
+| **404** | The specified resource was not found. |  -  |
+| **500** | An unexpected error. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a id="listindices"></a>
+# **ListIndices**
+> ListAllIndicesResponse ListIndices ()
+
+
+
+List all indices
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using LSO.SemanticSearch.Api;
+using LSO.SemanticSearch.Client;
+using LSO.SemanticSearch.Model;
+
+namespace Example
+{
+    public class ListIndicesExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "/api/v1";
+            var apiInstance = new IndexApi(config);
+
+            try
+            {
+                ListAllIndicesResponse result = apiInstance.ListIndices();
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling IndexApi.ListIndices: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+#### Using the ListIndicesWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    ApiResponse<ListAllIndicesResponse> response = apiInstance.ListIndicesWithHttpInfo();
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling IndexApi.ListIndicesWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+### Return type
+
+[**ListAllIndicesResponse**](ListAllIndicesResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Plain list of all indices. |  -  |
 | **400** | The provided input was wrong. |  -  |
 | **500** | An unexpected error. |  -  |
 

@@ -1,14 +1,13 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-using System.Runtime.CompilerServices;
-using LSO.SemanticSearch.Api;
+﻿using LSO.SemanticSearch.Api;
 using LSO.SemanticSearch.Client;
 using LSO.SemanticSearch.Model;
 using Minio;
 using Newtonsoft.Json.Linq;
 
-namespace semantic_search_sample_dotnet {
-    static class Program {
+namespace semantic_search_sample_dotnet 
+{
+    static class Program 
+    {
         static async Task Main()
         {
             // Init
@@ -30,7 +29,7 @@ namespace semantic_search_sample_dotnet {
             // create Index
             try
             {
-                await indexerClient.IndexPostAsync(new CreateIndexRequest(
+                await indexerClient.CreateIndexAsync(new CreateIndexRequest(
                     indexName, new List<IndexFieldMapping>()
                 ));
             }
@@ -39,11 +38,10 @@ namespace semantic_search_sample_dotnet {
                 Console.WriteLine("Error creating index (maybe it exists?)");
             }
 
-
             // index the document
+            // searching in ./test/*
             await IndexDocument(indexName, "test.pdf", minio, indexerClient);
            
-            
             // Search the index
             var searchRequest = new SearchQueryRequest(new List<TextQuery>
             {
@@ -54,7 +52,8 @@ namespace semantic_search_sample_dotnet {
                     FullTextWeight = 0,
                 }
             }, minScore: 0.05M);
-            var results = await searchClient.SearchIndexNamePostAsync(indexName, searchRequest);
+            
+            var results = await searchClient.SearchIndexAsync(indexName, searchRequest);
             Console.WriteLine(results.ToJson());
         }
 
@@ -78,8 +77,9 @@ namespace semantic_search_sample_dotnet {
             // Upload the file to index
             await MinioUtil.UploadFile($"test/{fileName}", $"{documentId}/{fileName}", indexName, minio);
 
+            
             // Start the indexing
-            await indexer.IndexIndexNameDocumentsPostAsync(
+            await indexer.CreateDocumentAsync(
                 indexName,
                 documentId.ToString(), 
                 new CreateDocumentRequest(documentId.ToString())    

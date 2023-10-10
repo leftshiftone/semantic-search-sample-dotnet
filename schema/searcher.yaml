@@ -20,6 +20,7 @@ paths:
       tags:
         - Search
       description: Search for documents
+      operationId: searchIndex
       parameters:
         - $ref: '#/components/parameters/path_index_name'
       requestBody:

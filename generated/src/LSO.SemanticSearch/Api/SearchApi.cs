@@ -38,7 +38,7 @@ namespace LSO.SemanticSearch.Api
         /// <param name="searchQueryRequest">The search query. (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>SearchResultsResponse</returns>
-        SearchResultsResponse SearchIndexNamePost(string indexName, SearchQueryRequest? searchQueryRequest = default(SearchQueryRequest?), int operationIndex = 0);
+        SearchResultsResponse SearchIndex(string indexName, SearchQueryRequest? searchQueryRequest = default(SearchQueryRequest?), int operationIndex = 0);
 
         /// <summary>
         /// 
@@ -51,7 +51,7 @@ namespace LSO.SemanticSearch.Api
         /// <param name="searchQueryRequest">The search query. (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of SearchResultsResponse</returns>
-        ApiResponse<SearchResultsResponse> SearchIndexNamePostWithHttpInfo(string indexName, SearchQueryRequest? searchQueryRequest = default(SearchQueryRequest?), int operationIndex = 0);
+        ApiResponse<SearchResultsResponse> SearchIndexWithHttpInfo(string indexName, SearchQueryRequest? searchQueryRequest = default(SearchQueryRequest?), int operationIndex = 0);
         #endregion Synchronous Operations
     }
 
@@ -73,7 +73,7 @@ namespace LSO.SemanticSearch.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of SearchResultsResponse</returns>
-        System.Threading.Tasks.Task<SearchResultsResponse> SearchIndexNamePostAsync(string indexName, SearchQueryRequest? searchQueryRequest = default(SearchQueryRequest?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<SearchResultsResponse> SearchIndexAsync(string indexName, SearchQueryRequest? searchQueryRequest = default(SearchQueryRequest?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// 
@@ -87,7 +87,7 @@ namespace LSO.SemanticSearch.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (SearchResultsResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<SearchResultsResponse>> SearchIndexNamePostWithHttpInfoAsync(string indexName, SearchQueryRequest? searchQueryRequest = default(SearchQueryRequest?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<SearchResultsResponse>> SearchIndexWithHttpInfoAsync(string indexName, SearchQueryRequest? searchQueryRequest = default(SearchQueryRequest?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         #endregion Asynchronous Operations
     }
 
@@ -216,9 +216,9 @@ namespace LSO.SemanticSearch.Api
         /// <param name="searchQueryRequest">The search query. (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>SearchResultsResponse</returns>
-        public SearchResultsResponse SearchIndexNamePost(string indexName, SearchQueryRequest? searchQueryRequest = default(SearchQueryRequest?), int operationIndex = 0)
+        public SearchResultsResponse SearchIndex(string indexName, SearchQueryRequest? searchQueryRequest = default(SearchQueryRequest?), int operationIndex = 0)
         {
-            LSO.SemanticSearch.Client.ApiResponse<SearchResultsResponse> localVarResponse = SearchIndexNamePostWithHttpInfo(indexName, searchQueryRequest);
+            LSO.SemanticSearch.Client.ApiResponse<SearchResultsResponse> localVarResponse = SearchIndexWithHttpInfo(indexName, searchQueryRequest);
             return localVarResponse.Data;
         }
 
@@ -230,12 +230,12 @@ namespace LSO.SemanticSearch.Api
         /// <param name="searchQueryRequest">The search query. (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of SearchResultsResponse</returns>
-        public LSO.SemanticSearch.Client.ApiResponse<SearchResultsResponse> SearchIndexNamePostWithHttpInfo(string indexName, SearchQueryRequest? searchQueryRequest = default(SearchQueryRequest?), int operationIndex = 0)
+        public LSO.SemanticSearch.Client.ApiResponse<SearchResultsResponse> SearchIndexWithHttpInfo(string indexName, SearchQueryRequest? searchQueryRequest = default(SearchQueryRequest?), int operationIndex = 0)
         {
             // verify the required parameter 'indexName' is set
             if (indexName == null)
             {
-                throw new LSO.SemanticSearch.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->SearchIndexNamePost");
+                throw new LSO.SemanticSearch.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->SearchIndex");
             }
 
             LSO.SemanticSearch.Client.RequestOptions localVarRequestOptions = new LSO.SemanticSearch.Client.RequestOptions();
@@ -264,7 +264,7 @@ namespace LSO.SemanticSearch.Api
             localVarRequestOptions.PathParameters.Add("index_name", LSO.SemanticSearch.Client.ClientUtils.ParameterToString(indexName)); // path parameter
             localVarRequestOptions.Data = searchQueryRequest;
 
-            localVarRequestOptions.Operation = "SearchApi.SearchIndexNamePost";
+            localVarRequestOptions.Operation = "SearchApi.SearchIndex";
             localVarRequestOptions.OperationIndex = operationIndex;
 
 
@@ -272,7 +272,7 @@ namespace LSO.SemanticSearch.Api
             var localVarResponse = this.Client.Post<SearchResultsResponse>("/search/{index_name}", localVarRequestOptions, this.Configuration);
             if (this.ExceptionFactory != null)
             {
-                Exception _exception = this.ExceptionFactory("SearchIndexNamePost", localVarResponse);
+                Exception _exception = this.ExceptionFactory("SearchIndex", localVarResponse);
                 if (_exception != null)
                 {
                     throw _exception;
@@ -291,9 +291,9 @@ namespace LSO.SemanticSearch.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of SearchResultsResponse</returns>
-        public async System.Threading.Tasks.Task<SearchResultsResponse> SearchIndexNamePostAsync(string indexName, SearchQueryRequest? searchQueryRequest = default(SearchQueryRequest?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<SearchResultsResponse> SearchIndexAsync(string indexName, SearchQueryRequest? searchQueryRequest = default(SearchQueryRequest?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            LSO.SemanticSearch.Client.ApiResponse<SearchResultsResponse> localVarResponse = await SearchIndexNamePostWithHttpInfoAsync(indexName, searchQueryRequest, operationIndex, cancellationToken).ConfigureAwait(false);
+            LSO.SemanticSearch.Client.ApiResponse<SearchResultsResponse> localVarResponse = await SearchIndexWithHttpInfoAsync(indexName, searchQueryRequest, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -306,12 +306,12 @@ namespace LSO.SemanticSearch.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (SearchResultsResponse)</returns>
-        public async System.Threading.Tasks.Task<LSO.SemanticSearch.Client.ApiResponse<SearchResultsResponse>> SearchIndexNamePostWithHttpInfoAsync(string indexName, SearchQueryRequest? searchQueryRequest = default(SearchQueryRequest?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<LSO.SemanticSearch.Client.ApiResponse<SearchResultsResponse>> SearchIndexWithHttpInfoAsync(string indexName, SearchQueryRequest? searchQueryRequest = default(SearchQueryRequest?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'indexName' is set
             if (indexName == null)
             {
-                throw new LSO.SemanticSearch.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->SearchIndexNamePost");
+                throw new LSO.SemanticSearch.Client.ApiException(400, "Missing required parameter 'indexName' when calling SearchApi->SearchIndex");
             }
 
 
@@ -341,7 +341,7 @@ namespace LSO.SemanticSearch.Api
             localVarRequestOptions.PathParameters.Add("index_name", LSO.SemanticSearch.Client.ClientUtils.ParameterToString(indexName)); // path parameter
             localVarRequestOptions.Data = searchQueryRequest;
 
-            localVarRequestOptions.Operation = "SearchApi.SearchIndexNamePost";
+            localVarRequestOptions.Operation = "SearchApi.SearchIndex";
             localVarRequestOptions.OperationIndex = operationIndex;
 
 
@@ -350,7 +350,7 @@ namespace LSO.SemanticSearch.Api
 
             if (this.ExceptionFactory != null)
             {
-                Exception _exception = this.ExceptionFactory("SearchIndexNamePost", localVarResponse);
+                Exception _exception = this.ExceptionFactory("SearchIndex", localVarResponse);
                 if (_exception != null)
                 {
                     throw _exception;

@@ -9,5 +9,5 @@ openapi-generator generate \
 openapi-generator generate \
 -i schema/searcher.yaml \
 -g csharp \
---additional-properties=packageName=LSO.SemanticSearch,apiName=SearcherApi\
+--additional-properties=packageName=LSO.SemanticSearch,apiName=SearcherApi \
 -o generated

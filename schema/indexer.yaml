@@ -20,6 +20,7 @@ paths:
       tags:
         - Index
       description: Create an index
+      operationId: createIndex
       requestBody:
         description: The index definition.
         content:
@@ -41,6 +42,7 @@ paths:
       tags:
         - Index
       description: List all indices
+      operationId: listIndices
       responses:
         '200':
           description: Plain list of all indices.
@@ -57,6 +59,7 @@ paths:
       tags:
         - Index
       description: Delete an entire index
+      operationId: deleteIndex
       parameters:
         - $ref: '#/components/parameters/path_index_name'
         - name: force
@@ -80,6 +83,7 @@ paths:
       tags:
         - Index
       description: Trigger indexing of document information.
+      operationId: createDocument
       parameters:
         - $ref: '#/components/parameters/path_index_name'
         - $ref: '#/components/parameters/path_doc_id'
@@ -100,6 +104,7 @@ paths:
       tags:
         - Index
       description: Delete an indexed documents.
+      operationId: deleteDocument
       parameters:
         - $ref: '#/components/parameters/path_index_name'
         - $ref: '#/components/parameters/path_doc_id'

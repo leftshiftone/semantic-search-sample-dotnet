@@ -3,124 +3,25 @@ info:
   contact:
     email: contact@leftshift.one
   description: |
-    The indexer component HTTP API of the semantic search service.
+    The searcher component HTTP API of the semantic search Service.
 
     The service depends on a database backend. If a mere vector store (e.g. [Qdrant](https://qdrant.tech/)), instead of a full fledged search engine (e.g. [Elasticsearch](https://www.elastic.co/)), is configured, some advanced functionalities of the API have no effect. This is noted where appropriate, referring to the former as _simple database_ and the latter as _full database_.
-  title: Semantic Search - Indexer HTTP API
-  version: 1.5.0
+  title: Semantic Search - Searcher HTTP API
+  version: 1.4.0
 servers:
 - url: /api/v1
 tags:
-- description: Index endpoints
-  name: Index
+- description: Search endpoints
+  name: Search
 paths:
-  /index:
-    get:
-      description: List all indices
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ListAllIndicesResponse'
-          description: Plain list of all indices.
-        "400":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: The provided input was wrong.
-        "500":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: An unexpected error.
-      tags:
-      - Index
+  /search/{index_name}:
     post:
-      description: Create an index
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateIndexRequest'
-        description: The index definition.
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/IndexResponse'
-          description: The created index definition.
-        "400":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: The provided input was wrong.
-        "500":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: An unexpected error.
-      tags:
-      - Index
-  /index/{index_name}:
-    delete:
-      description: Delete an entire index
+      description: Search for documents
+      operationId: searchIndex
       parameters:
       - explode: false
         in: path
         name: index_name
-        required: true
-        schema:
-          type: string
-        style: simple
-      - description: "If set to \"true\", delete index even if it is not empty."
-        explode: true
-        in: query
-        name: force
-        required: false
-        schema:
-          default: "false"
-          enum:
-          - "true"
-          - "false"
-          type: string
-        style: form
-      responses:
-        "204":
-          description: Index has been deleted.
-        "404":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: The specified resource was not found.
-        "500":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: An unexpected error.
-      tags:
-      - Index
-  /index/{index_name}/documents:
-    post:
-      description: Trigger indexing of document information.
-      parameters:
-      - explode: false
-        in: path
-        name: index_name
-        required: true
-        schema:
-          type: string
-        style: simple
-      - explode: false
-        in: path
-        name: doc_id
         required: true
         schema:
           type: string
@@ -129,16 +30,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateDocumentRequest'
+              $ref: '#/components/schemas/SearchQueryRequest'
+        description: The search query.
       responses:
-        "204":
-          description: Document has been indexed.
-        "404":
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: The specified resource was not found.
+                $ref: '#/components/schemas/SearchResultsResponse'
+          description: Search results
         "500":
           content:
             application/json:
@@ -146,56 +46,13 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: An unexpected error.
       tags:
-      - Index
-  /index/{index_name}/documents/{doc_id}:
-    delete:
-      description: Delete an indexed documents.
-      parameters:
-      - explode: false
-        in: path
-        name: index_name
-        required: true
-        schema:
-          type: string
-        style: simple
-      - explode: false
-        in: path
-        name: doc_id
-        required: true
-        schema:
-          type: string
-        style: simple
-      responses:
-        "204":
-          description: Document has been deleted from the index.
-        "404":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: The specified resource was not found.
-        "500":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-          description: An unexpected error.
-      tags:
-      - Index
+      - Search
 components:
   parameters:
     path_index_name:
       explode: false
       in: path
       name: index_name
-      required: true
-      schema:
-        type: string
-      style: simple
-    path_doc_id:
-      explode: false
-      in: path
-      name: doc_id
       required: true
       schema:
         type: string
@@ -220,94 +77,144 @@ components:
             $ref: '#/components/schemas/ErrorResponse'
       description: An unexpected error.
   schemas:
-    CreateIndexRequest:
-      description: |
-        Create a new index with given field type mapping. Default fields document_id_, content_text_ and file_name_ are added automatically.
-
-        > **_NOTE:_**  For simple database backends, the field mapping has no effect at the moment.
+    SearchQueryRequest:
       example:
-        name: name
-        fields:
-        - type: BOOLEAN
-          field_name: field_name
-        - type: BOOLEAN
-          field_name: field_name
+        text_queries:
+        - fuzziness: AUTO
+          query: query
+          full_text_weight: 0.6027456183070403
+          semantic_weight: 0.08008281904610115
+          field_name: content_text_
+        - fuzziness: AUTO
+          query: query
+          full_text_weight: 0.6027456183070403
+          semantic_weight: 0.08008281904610115
+          field_name: content_text_
+        filter_queries:
+        - null
+        - null
+        offset: 1
+        is_distinct: false
+        preprocessor_settings:
+          max_query_len: 0
+        limit: 60
+        filter_query: ""
+        search_settings:
+          full_text_score_saturation: 0.9301444243932576
+          global_full_text_score_weight: 0.7061401241503109
+          global_semantic_score_weight: 0.23021358869347652
+        postprocessor_settings:
+          normalizer_sigmoid_scale: 4.145608029883936
+          normalizer_sigmoid_offset: 2.027123023002322
+          normalizer_type: "NO"
+        min_score: 0.5637376656633328
       properties:
-        name:
-          description: The index name.
-          type: string
-        fields:
-          items:
-            $ref: '#/components/schemas/IndexFieldMapping'
-          type: array
-      required:
-      - fields
-      - name
-      type: object
-    IndexFieldMapping:
-      example:
-        type: BOOLEAN
-        field_name: field_name
-      properties:
-        field_name:
-          description: The name of the field.
-          type: string
-        type:
+        text_queries:
           description: |
-            The data type of the field. Possible values:
-              * BOOLEAN, INTEGER, FLOAT: The familiar data types.
-              * TIMESTAMP: Formatted either as yyyy-MM-ddTHH:mm:ss.SSSSSSZ or yyyy-MM-dd
-              * JSON: A general, structured element.
-              * GEO_POINT: Latitude and longitude coordinates
-              * KEYWORD: Text field, which is not analyzed. Suited for filter queries.
-              * TEXT: Text field, which is analyzed as well as (possibly) semantically embedded. Suited for full text and semantic search.
-          enum:
-          - BOOLEAN
-          - INTEGER
-          - FLOAT
-          - TIMESTAMP
-          - KEYWORD
-          - TEXT
-          - JSON
-          - GEO_POINT
-          type: string
-      required:
-      - field_name
-      - type
-      type: object
-    IndexResponse:
-      example:
-        name: name
-        fields:
-        - type: BOOLEAN
-          field_name: field_name
-        - type: BOOLEAN
-          field_name: field_name
-      properties:
-        name:
-          description: The index name.
-          type: string
-        fields:
+            The main text queries. A combination of semantic and full text search is performed depending on the settings.
+
+            > **_NOTE:_**  For simple database backends, only a single semantic query against the default content_text_ field is performed at the moment.
           items:
-            $ref: '#/components/schemas/IndexFieldMapping'
+            $ref: '#/components/schemas/TextQuery'
+          type: array
+        filter_queries:
+          description: |
+            A list of filters.
+          items:
+            $ref: '#/components/schemas/SearchQueryRequest_filter_queries_inner'
+          type: array
+        filter_query:
+          default: ""
+          description: |
+            The filter query. It can be any Elasticsearch [query string syntax](https://www.elastic.co/guide/en/elasticsearch/reference/7.17/query-dsl-query-string-query.html#query-string-syntax). Beside explicit meta data field, all default fields can be used as well: document_id_, content_text_, content_json_.
+
+            > **_NOTE:_**  This only affects full database backends and will be replaced by the filter_queries parameter in the future.
+          type: string
+        offset:
+          default: 0
+          description: The count of results which should be omitted.
+          format: int64
+          type: integer
+        limit:
+          default: 10
+          description: The number of results to retrieve.
+          format: int64
+          maximum: 100
+          minimum: 1
+          type: integer
+        min_score:
+          default: 0.5
+          description: The minimum score of the obtained results. Any score below
+            this threshold will not be returned.
+          maximum: 1
+          minimum: 0
+          type: number
+        is_distinct:
+          default: false
+          description: "If set to true, only the highest scoring result for each indexed\
+            \ document is returned. If set to false, the same indexed document might\
+            \ yield multiple hits."
+          type: boolean
+        search_settings:
+          $ref: '#/components/schemas/SearchSettings'
+        preprocessor_settings:
+          $ref: '#/components/schemas/PreprocessorSettings'
+        postprocessor_settings:
+          $ref: '#/components/schemas/PostprocessorSettings'
+      required:
+      - text_queries
+      type: object
+    SearchResultsResponse:
+      example:
+        total: 0
+        elements:
+        - score: 6.027456183070403
+          raw_id: raw_id
+          data:
+            key: ""
+          id: id
+        - score: 6.027456183070403
+          raw_id: raw_id
+          data:
+            key: ""
+          id: id
+      properties:
+        total:
+          format: int64
+          type: integer
+        elements:
+          items:
+            $ref: '#/components/schemas/SearchResultResponse'
           type: array
       required:
-      - fields
-      - name
+      - elements
+      - total
       type: object
-    ListAllIndicesResponse:
+    SearchResultResponse:
       example:
-        indices:
-        - indices
-        - indices
+        score: 6.027456183070403
+        raw_id: raw_id
+        data:
+          key: ""
+        id: id
       properties:
-        indices:
-          description: List of the names of all indices.
-          items:
-            type: string
-          type: array
+        id:
+          description: The identifier of the indexed document.
+          type: string
+        raw_id:
+          description: The identifier of the underlying indexed object.
+          type: string
+        score:
+          description: The relevance score of the search result.
+          type: number
+        data:
+          additionalProperties: {}
+          type: object
       required:
-      - indices
+      - data
+      - id
+      - raw_id
+      - score
       type: object
     ErrorResponse:
       properties:
@@ -321,74 +228,171 @@ components:
       - message
       - type
       type: object
-    CreateDocumentRequest:
-      description: Index a document with given external id according to the specified
-        settings.
+    TextQuery:
+      description: The representation of a semantic as well as full text query.
       example:
-        document_index_settings:
-          semantic_fields:
-          - semantic_fields
-          - semantic_fields
-          sentence_overlap: 0
-          sentence_count: 1
-          min_chars: 0
-          delete_source: true
-          split_sentences: true
-        document_id: document_id
+        fuzziness: AUTO
+        query: query
+        full_text_weight: 0.6027456183070403
+        semantic_weight: 0.08008281904610115
+        field_name: content_text_
       properties:
-        document_id:
-          description: The id of the document to be indexed.
+        field_name:
+          default: content_text_
+          description: "The name of the indexed text field to be searched. The default\
+            \ value refers to the well known field 'content_text_', containing the\
+            \ document text content."
           type: string
-        document_index_settings:
-          $ref: '#/components/schemas/DocumentIndexSettings'
-      required:
-      - document_id
-      type: object
-    DocumentIndexSettings:
-      example:
-        semantic_fields:
-        - semantic_fields
-        - semantic_fields
-        sentence_overlap: 0
-        sentence_count: 1
-        min_chars: 0
-        delete_source: true
-        split_sentences: true
-      properties:
-        split_sentences:
-          default: true
-          description: Whether to split the document into sentences.
-          type: boolean
-        sentence_count:
-          default: 3
-          description: The number of sentences to group and index together.
-          minimum: 1
-          type: integer
-        sentence_overlap:
-          default: 1
-          description: The number of sentences consecutive sentence groups overlap.
+        query:
+          description: The main search query for this field.
+          type: string
+        semantic_weight:
+          default: 1.0
+          description: "The weight multiplier for the semantic part of this query.\
+            \ If set to 0, no semantic search is performed for this field."
           minimum: 0
-          type: integer
-        min_chars:
-          default: 1
-          description: "The minimum number of characters a sentence group must contain.\
-            \ If the length of a sentence group is below this value, additional sentences\
-            \ are added until this requirement is fulfilled."
+          type: number
+        full_text_weight:
+          default: 1.0
+          description: "The weight multiplier for the full text search part of this\
+            \ query. If set to 0, no full text search is performed for this field."
           minimum: 0
-          type: integer
-        semantic_fields:
-          default:
-          - content_text_
+          type: number
+        fuzziness:
+          default: AUTO
           description: |
-            The names of text fields, which should be semantically embedded. The default value 'content_text_' refers to the raw document text content.
-
-            > **_NOTE:_**  For simple database backends, only the default content_text_ is semantically embedded at the moment.
-          items:
-            type: string
-          type: array
-        delete_source:
-          default: true
-          description: Delete the source files belonging to that document.
-          type: boolean
+            The amount of fuzziness for the full text search part.
+              * 0, 1, 2, 3: Number of allowed edits.
+              * AUTO: Variable number of edits depending on token lengths.
+          enum:
+          - "0"
+          - "1"
+          - "2"
+          - "3"
+          - AUTO
+          type: string
       type: object
+    KeyValueFilter:
+      description: A filter matching values in given fields.
+      properties:
+        field_name:
+          description: "The name of the indexed field to be filtered. Nested fields\
+            \ in an object hierarchy are accessed with a '.' as separator, e.g. name.first_name."
+          type: string
+        value:
+          $ref: '#/components/schemas/KeyValueFilter_value'
+        modal_type:
+          default: MUST
+          description: Wether the filter must (only documents matching the filter
+            are returned) or must not hold (only documents not matching the filter
+            are returned).
+          enum:
+          - MUST
+          - MUSTNOT
+          type: string
+      type: object
+    DateFilter:
+      description: A filter specifying a date range for the given field.
+      properties:
+        field_name:
+          description: "The name of the indexed field to be filtered. Nested fields\
+            \ in a JSON structure are accessed with a '.' as separator, e.g. properties.date."
+          type: string
+        start:
+          default: 1900-01-01
+          description: Start timestamp in any ISO 8601 compatible format.
+          type: string
+        end:
+          default: 2100-01-01
+          description: End timestamp in any ISO 8601 compatible format.
+          type: string
+        modal_type:
+          default: MUST
+          description: Wether the filter must (only documents matching the filter
+            are returned) or must not hold (only documents not matching the filter
+            are returned).
+          enum:
+          - MUST
+          - MUSTNOT
+          type: string
+      type: object
+    SearchSettings:
+      description: |
+        The settings to fine-tune the search behavior.
+
+        > **_NOTE:_**  For simple database backends, these settings have no effect at the moment.
+      example:
+        full_text_score_saturation: 0.9301444243932576
+        global_full_text_score_weight: 0.7061401241503109
+        global_semantic_score_weight: 0.23021358869347652
+      properties:
+        global_semantic_score_weight:
+          default: 1.0
+          description: The multiplicative weight for the semantic part of the score.
+          minimum: 0
+          type: number
+        global_full_text_score_weight:
+          default: 1.0
+          description: The multiplicative weight for the full text part of the score.
+          minimum: 0
+          type: number
+        full_text_score_saturation:
+          default: 0
+          description: "The value in x / (value + x), to saturate the unbounded full\
+            \ text part of the score and to squeeze it into the interval [0,1). If\
+            \ the value is 0, no saturation is performed and the score is unbounded."
+          minimum: 0
+          type: number
+      type: object
+    PreprocessorSettings:
+      description: The settings to control preprocessing of the raw query.
+      example:
+        max_query_len: 0
+      properties:
+        max_query_len:
+          default: 0
+          description: "The maximum length of text queries. Longer queries will be\
+            \ truncated. If set to 0, no truncation will be performed."
+          minimum: 0
+          type: integer
+      type: object
+    PostprocessorSettings:
+      description: The settings to control postprocessing of the raw search results.
+      example:
+        normalizer_sigmoid_scale: 4.145608029883936
+        normalizer_sigmoid_offset: 2.027123023002322
+        normalizer_type: "NO"
+      properties:
+        normalizer_type:
+          default: "NO"
+          description: |
+            The type of score normalization to perform.
+              * NO: Do not perform any normalization and return the raw search scores.
+              * SIGMOID: Sigmoid based normalization in the interval (0, 1). Behavior can be tuned by setting an appropriate offset and scale.
+          enum:
+          - "NO"
+          - SIGMOID
+          type: string
+        normalizer_sigmoid_offset:
+          default: 0.5
+          description: The offset in 1 / ( 1 + exp(-(x-offset)/scale) ) used for the
+            sigmoid normalizer.
+          type: number
+        normalizer_sigmoid_scale:
+          default: 1.0
+          description: The scale in 1 / ( 1 + exp(-(x-offset)/scale) ) used for the
+            sigmoid normalizer.
+          type: number
+      type: object
+    SearchQueryRequest_filter_queries_inner:
+      anyOf:
+      - $ref: '#/components/schemas/KeyValueFilter'
+      - $ref: '#/components/schemas/DateFilter'
+    KeyValueFilter_value:
+      description: The target value.
+      oneOf:
+      - type: boolean
+      - type: integer
+      - type: number
+      - type: string
 

@@ -31,77 +31,6 @@ namespace LSO.SemanticSearch.Api
         /// 
         /// </summary>
         /// <remarks>
-        /// List all indices
-        /// </remarks>
-        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ListAllIndicesResponse</returns>
-        ListAllIndicesResponse IndexGet(int operationIndex = 0);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>
-        /// List all indices
-        /// </remarks>
-        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ApiResponse of ListAllIndicesResponse</returns>
-        ApiResponse<ListAllIndicesResponse> IndexGetWithHttpInfo(int operationIndex = 0);
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>
-        /// Delete an entire index
-        /// </remarks>
-        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="indexName"></param>
-        /// <param name="force">If set to \&quot;true\&quot;, delete index even if it is not empty. (optional, default to false)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns></returns>
-        void IndexIndexNameDelete(string indexName, string? force = default(string?), int operationIndex = 0);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>
-        /// Delete an entire index
-        /// </remarks>
-        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="indexName"></param>
-        /// <param name="force">If set to \&quot;true\&quot;, delete index even if it is not empty. (optional, default to false)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> IndexIndexNameDeleteWithHttpInfo(string indexName, string? force = default(string?), int operationIndex = 0);
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>
-        /// Delete an indexed documents.
-        /// </remarks>
-        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="indexName"></param>
-        /// <param name="docId"></param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns></returns>
-        void IndexIndexNameDocumentsDocIdDelete(string indexName, string docId, int operationIndex = 0);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>
-        /// Delete an indexed documents.
-        /// </remarks>
-        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="indexName"></param>
-        /// <param name="docId"></param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> IndexIndexNameDocumentsDocIdDeleteWithHttpInfo(string indexName, string docId, int operationIndex = 0);
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>
         /// Trigger indexing of document information.
         /// </remarks>
         /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
@@ -110,7 +39,7 @@ namespace LSO.SemanticSearch.Api
         /// <param name="createDocumentRequest"> (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns></returns>
-        void IndexIndexNameDocumentsPost(string indexName, string docId, CreateDocumentRequest? createDocumentRequest = default(CreateDocumentRequest?), int operationIndex = 0);
+        void CreateDocument(string indexName, string docId, CreateDocumentRequest? createDocumentRequest = default(CreateDocumentRequest?), int operationIndex = 0);
 
         /// <summary>
         /// 
@@ -124,7 +53,7 @@ namespace LSO.SemanticSearch.Api
         /// <param name="createDocumentRequest"> (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> IndexIndexNameDocumentsPostWithHttpInfo(string indexName, string docId, CreateDocumentRequest? createDocumentRequest = default(CreateDocumentRequest?), int operationIndex = 0);
+        ApiResponse<Object> CreateDocumentWithHttpInfo(string indexName, string docId, CreateDocumentRequest? createDocumentRequest = default(CreateDocumentRequest?), int operationIndex = 0);
         /// <summary>
         /// 
         /// </summary>
@@ -135,7 +64,7 @@ namespace LSO.SemanticSearch.Api
         /// <param name="createIndexRequest">The index definition. (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>IndexResponse</returns>
-        IndexResponse IndexPost(CreateIndexRequest? createIndexRequest = default(CreateIndexRequest?), int operationIndex = 0);
+        IndexResponse CreateIndex(CreateIndexRequest? createIndexRequest = default(CreateIndexRequest?), int operationIndex = 0);
 
         /// <summary>
         /// 
@@ -147,7 +76,78 @@ namespace LSO.SemanticSearch.Api
         /// <param name="createIndexRequest">The index definition. (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of IndexResponse</returns>
-        ApiResponse<IndexResponse> IndexPostWithHttpInfo(CreateIndexRequest? createIndexRequest = default(CreateIndexRequest?), int operationIndex = 0);
+        ApiResponse<IndexResponse> CreateIndexWithHttpInfo(CreateIndexRequest? createIndexRequest = default(CreateIndexRequest?), int operationIndex = 0);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Delete an indexed documents.
+        /// </remarks>
+        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="indexName"></param>
+        /// <param name="docId"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns></returns>
+        void DeleteDocument(string indexName, string docId, int operationIndex = 0);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Delete an indexed documents.
+        /// </remarks>
+        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="indexName"></param>
+        /// <param name="docId"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>ApiResponse of Object(void)</returns>
+        ApiResponse<Object> DeleteDocumentWithHttpInfo(string indexName, string docId, int operationIndex = 0);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Delete an entire index
+        /// </remarks>
+        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="indexName"></param>
+        /// <param name="force">If set to \&quot;true\&quot;, delete index even if it is not empty. (optional, default to false)</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns></returns>
+        void DeleteIndex(string indexName, string? force = default(string?), int operationIndex = 0);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Delete an entire index
+        /// </remarks>
+        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="indexName"></param>
+        /// <param name="force">If set to \&quot;true\&quot;, delete index even if it is not empty. (optional, default to false)</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>ApiResponse of Object(void)</returns>
+        ApiResponse<Object> DeleteIndexWithHttpInfo(string indexName, string? force = default(string?), int operationIndex = 0);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// List all indices
+        /// </remarks>
+        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>ListAllIndicesResponse</returns>
+        ListAllIndicesResponse ListIndices(int operationIndex = 0);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// List all indices
+        /// </remarks>
+        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>ApiResponse of ListAllIndicesResponse</returns>
+        ApiResponse<ListAllIndicesResponse> ListIndicesWithHttpInfo(int operationIndex = 0);
         #endregion Synchronous Operations
     }
 
@@ -161,83 +161,6 @@ namespace LSO.SemanticSearch.Api
         /// 
         /// </summary>
         /// <remarks>
-        /// List all indices
-        /// </remarks>
-        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ListAllIndicesResponse</returns>
-        System.Threading.Tasks.Task<ListAllIndicesResponse> IndexGetAsync(int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>
-        /// List all indices
-        /// </remarks>
-        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (ListAllIndicesResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<ListAllIndicesResponse>> IndexGetWithHttpInfoAsync(int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>
-        /// Delete an entire index
-        /// </remarks>
-        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="indexName"></param>
-        /// <param name="force">If set to \&quot;true\&quot;, delete index even if it is not empty. (optional, default to false)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task IndexIndexNameDeleteAsync(string indexName, string? force = default(string?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>
-        /// Delete an entire index
-        /// </remarks>
-        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="indexName"></param>
-        /// <param name="force">If set to \&quot;true\&quot;, delete index even if it is not empty. (optional, default to false)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> IndexIndexNameDeleteWithHttpInfoAsync(string indexName, string? force = default(string?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>
-        /// Delete an indexed documents.
-        /// </remarks>
-        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="indexName"></param>
-        /// <param name="docId"></param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task IndexIndexNameDocumentsDocIdDeleteAsync(string indexName, string docId, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>
-        /// Delete an indexed documents.
-        /// </remarks>
-        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="indexName"></param>
-        /// <param name="docId"></param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> IndexIndexNameDocumentsDocIdDeleteWithHttpInfoAsync(string indexName, string docId, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>
         /// Trigger indexing of document information.
         /// </remarks>
         /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
@@ -247,7 +170,7 @@ namespace LSO.SemanticSearch.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task IndexIndexNameDocumentsPostAsync(string indexName, string docId, CreateDocumentRequest? createDocumentRequest = default(CreateDocumentRequest?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task CreateDocumentAsync(string indexName, string docId, CreateDocumentRequest? createDocumentRequest = default(CreateDocumentRequest?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// 
@@ -262,7 +185,7 @@ namespace LSO.SemanticSearch.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> IndexIndexNameDocumentsPostWithHttpInfoAsync(string indexName, string docId, CreateDocumentRequest? createDocumentRequest = default(CreateDocumentRequest?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<Object>> CreateDocumentWithHttpInfoAsync(string indexName, string docId, CreateDocumentRequest? createDocumentRequest = default(CreateDocumentRequest?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// 
         /// </summary>
@@ -274,7 +197,7 @@ namespace LSO.SemanticSearch.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of IndexResponse</returns>
-        System.Threading.Tasks.Task<IndexResponse> IndexPostAsync(CreateIndexRequest? createIndexRequest = default(CreateIndexRequest?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<IndexResponse> CreateIndexAsync(CreateIndexRequest? createIndexRequest = default(CreateIndexRequest?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// 
@@ -287,7 +210,84 @@ namespace LSO.SemanticSearch.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (IndexResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<IndexResponse>> IndexPostWithHttpInfoAsync(CreateIndexRequest? createIndexRequest = default(CreateIndexRequest?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<IndexResponse>> CreateIndexWithHttpInfoAsync(CreateIndexRequest? createIndexRequest = default(CreateIndexRequest?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Delete an indexed documents.
+        /// </remarks>
+        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="indexName"></param>
+        /// <param name="docId"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of void</returns>
+        System.Threading.Tasks.Task DeleteDocumentAsync(string indexName, string docId, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Delete an indexed documents.
+        /// </remarks>
+        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="indexName"></param>
+        /// <param name="docId"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse</returns>
+        System.Threading.Tasks.Task<ApiResponse<Object>> DeleteDocumentWithHttpInfoAsync(string indexName, string docId, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Delete an entire index
+        /// </remarks>
+        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="indexName"></param>
+        /// <param name="force">If set to \&quot;true\&quot;, delete index even if it is not empty. (optional, default to false)</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of void</returns>
+        System.Threading.Tasks.Task DeleteIndexAsync(string indexName, string? force = default(string?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Delete an entire index
+        /// </remarks>
+        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="indexName"></param>
+        /// <param name="force">If set to \&quot;true\&quot;, delete index even if it is not empty. (optional, default to false)</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse</returns>
+        System.Threading.Tasks.Task<ApiResponse<Object>> DeleteIndexWithHttpInfoAsync(string indexName, string? force = default(string?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// List all indices
+        /// </remarks>
+        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ListAllIndicesResponse</returns>
+        System.Threading.Tasks.Task<ListAllIndicesResponse> ListIndicesAsync(int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// List all indices
+        /// </remarks>
+        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (ListAllIndicesResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<ListAllIndicesResponse>> ListIndicesWithHttpInfoAsync(int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         #endregion Asynchronous Operations
     }
 
@@ -409,446 +409,6 @@ namespace LSO.SemanticSearch.Api
         }
 
         /// <summary>
-        ///  List all indices
-        /// </summary>
-        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ListAllIndicesResponse</returns>
-        public ListAllIndicesResponse IndexGet(int operationIndex = 0)
-        {
-            LSO.SemanticSearch.Client.ApiResponse<ListAllIndicesResponse> localVarResponse = IndexGetWithHttpInfo();
-            return localVarResponse.Data;
-        }
-
-        /// <summary>
-        ///  List all indices
-        /// </summary>
-        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ApiResponse of ListAllIndicesResponse</returns>
-        public LSO.SemanticSearch.Client.ApiResponse<ListAllIndicesResponse> IndexGetWithHttpInfo(int operationIndex = 0)
-        {
-            LSO.SemanticSearch.Client.RequestOptions localVarRequestOptions = new LSO.SemanticSearch.Client.RequestOptions();
-
-            string[] _contentTypes = new string[] {
-            };
-
-            // to determine the Accept header
-            string[] _accepts = new string[] {
-                "application/json"
-            };
-
-            var localVarContentType = LSO.SemanticSearch.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-            }
-
-            var localVarAccept = LSO.SemanticSearch.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-            }
-
-
-            localVarRequestOptions.Operation = "IndexApi.IndexGet";
-            localVarRequestOptions.OperationIndex = operationIndex;
-
-
-            // make the HTTP request
-            var localVarResponse = this.Client.Get<ListAllIndicesResponse>("/index", localVarRequestOptions, this.Configuration);
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("IndexGet", localVarResponse);
-                if (_exception != null)
-                {
-                    throw _exception;
-                }
-            }
-
-            return localVarResponse;
-        }
-
-        /// <summary>
-        ///  List all indices
-        /// </summary>
-        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ListAllIndicesResponse</returns>
-        public async System.Threading.Tasks.Task<ListAllIndicesResponse> IndexGetAsync(int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            LSO.SemanticSearch.Client.ApiResponse<ListAllIndicesResponse> localVarResponse = await IndexGetWithHttpInfoAsync(operationIndex, cancellationToken).ConfigureAwait(false);
-            return localVarResponse.Data;
-        }
-
-        /// <summary>
-        ///  List all indices
-        /// </summary>
-        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (ListAllIndicesResponse)</returns>
-        public async System.Threading.Tasks.Task<LSO.SemanticSearch.Client.ApiResponse<ListAllIndicesResponse>> IndexGetWithHttpInfoAsync(int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-
-            LSO.SemanticSearch.Client.RequestOptions localVarRequestOptions = new LSO.SemanticSearch.Client.RequestOptions();
-
-            string[] _contentTypes = new string[] {
-            };
-
-            // to determine the Accept header
-            string[] _accepts = new string[] {
-                "application/json"
-            };
-
-            var localVarContentType = LSO.SemanticSearch.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-            }
-
-            var localVarAccept = LSO.SemanticSearch.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-            }
-
-
-            localVarRequestOptions.Operation = "IndexApi.IndexGet";
-            localVarRequestOptions.OperationIndex = operationIndex;
-
-
-            // make the HTTP request
-            var localVarResponse = await this.AsynchronousClient.GetAsync<ListAllIndicesResponse>("/index", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
-
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("IndexGet", localVarResponse);
-                if (_exception != null)
-                {
-                    throw _exception;
-                }
-            }
-
-            return localVarResponse;
-        }
-
-        /// <summary>
-        ///  Delete an entire index
-        /// </summary>
-        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="indexName"></param>
-        /// <param name="force">If set to \&quot;true\&quot;, delete index even if it is not empty. (optional, default to false)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns></returns>
-        public void IndexIndexNameDelete(string indexName, string? force = default(string?), int operationIndex = 0)
-        {
-            IndexIndexNameDeleteWithHttpInfo(indexName, force);
-        }
-
-        /// <summary>
-        ///  Delete an entire index
-        /// </summary>
-        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="indexName"></param>
-        /// <param name="force">If set to \&quot;true\&quot;, delete index even if it is not empty. (optional, default to false)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LSO.SemanticSearch.Client.ApiResponse<Object> IndexIndexNameDeleteWithHttpInfo(string indexName, string? force = default(string?), int operationIndex = 0)
-        {
-            // verify the required parameter 'indexName' is set
-            if (indexName == null)
-            {
-                throw new LSO.SemanticSearch.Client.ApiException(400, "Missing required parameter 'indexName' when calling IndexApi->IndexIndexNameDelete");
-            }
-
-            LSO.SemanticSearch.Client.RequestOptions localVarRequestOptions = new LSO.SemanticSearch.Client.RequestOptions();
-
-            string[] _contentTypes = new string[] {
-            };
-
-            // to determine the Accept header
-            string[] _accepts = new string[] {
-                "application/json"
-            };
-
-            var localVarContentType = LSO.SemanticSearch.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-            }
-
-            var localVarAccept = LSO.SemanticSearch.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-            }
-
-            localVarRequestOptions.PathParameters.Add("index_name", LSO.SemanticSearch.Client.ClientUtils.ParameterToString(indexName)); // path parameter
-            if (force != null)
-            {
-                localVarRequestOptions.QueryParameters.Add(LSO.SemanticSearch.Client.ClientUtils.ParameterToMultiMap("", "force", force));
-            }
-
-            localVarRequestOptions.Operation = "IndexApi.IndexIndexNameDelete";
-            localVarRequestOptions.OperationIndex = operationIndex;
-
-
-            // make the HTTP request
-            var localVarResponse = this.Client.Delete<Object>("/index/{index_name}", localVarRequestOptions, this.Configuration);
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("IndexIndexNameDelete", localVarResponse);
-                if (_exception != null)
-                {
-                    throw _exception;
-                }
-            }
-
-            return localVarResponse;
-        }
-
-        /// <summary>
-        ///  Delete an entire index
-        /// </summary>
-        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="indexName"></param>
-        /// <param name="force">If set to \&quot;true\&quot;, delete index even if it is not empty. (optional, default to false)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task IndexIndexNameDeleteAsync(string indexName, string? force = default(string?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            await IndexIndexNameDeleteWithHttpInfoAsync(indexName, force, operationIndex, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        ///  Delete an entire index
-        /// </summary>
-        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="indexName"></param>
-        /// <param name="force">If set to \&quot;true\&quot;, delete index even if it is not empty. (optional, default to false)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LSO.SemanticSearch.Client.ApiResponse<Object>> IndexIndexNameDeleteWithHttpInfoAsync(string indexName, string? force = default(string?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            // verify the required parameter 'indexName' is set
-            if (indexName == null)
-            {
-                throw new LSO.SemanticSearch.Client.ApiException(400, "Missing required parameter 'indexName' when calling IndexApi->IndexIndexNameDelete");
-            }
-
-
-            LSO.SemanticSearch.Client.RequestOptions localVarRequestOptions = new LSO.SemanticSearch.Client.RequestOptions();
-
-            string[] _contentTypes = new string[] {
-            };
-
-            // to determine the Accept header
-            string[] _accepts = new string[] {
-                "application/json"
-            };
-
-            var localVarContentType = LSO.SemanticSearch.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-            }
-
-            var localVarAccept = LSO.SemanticSearch.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-            }
-
-            localVarRequestOptions.PathParameters.Add("index_name", LSO.SemanticSearch.Client.ClientUtils.ParameterToString(indexName)); // path parameter
-            if (force != null)
-            {
-                localVarRequestOptions.QueryParameters.Add(LSO.SemanticSearch.Client.ClientUtils.ParameterToMultiMap("", "force", force));
-            }
-
-            localVarRequestOptions.Operation = "IndexApi.IndexIndexNameDelete";
-            localVarRequestOptions.OperationIndex = operationIndex;
-
-
-            // make the HTTP request
-            var localVarResponse = await this.AsynchronousClient.DeleteAsync<Object>("/index/{index_name}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
-
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("IndexIndexNameDelete", localVarResponse);
-                if (_exception != null)
-                {
-                    throw _exception;
-                }
-            }
-
-            return localVarResponse;
-        }
-
-        /// <summary>
-        ///  Delete an indexed documents.
-        /// </summary>
-        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="indexName"></param>
-        /// <param name="docId"></param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns></returns>
-        public void IndexIndexNameDocumentsDocIdDelete(string indexName, string docId, int operationIndex = 0)
-        {
-            IndexIndexNameDocumentsDocIdDeleteWithHttpInfo(indexName, docId);
-        }
-
-        /// <summary>
-        ///  Delete an indexed documents.
-        /// </summary>
-        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="indexName"></param>
-        /// <param name="docId"></param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LSO.SemanticSearch.Client.ApiResponse<Object> IndexIndexNameDocumentsDocIdDeleteWithHttpInfo(string indexName, string docId, int operationIndex = 0)
-        {
-            // verify the required parameter 'indexName' is set
-            if (indexName == null)
-            {
-                throw new LSO.SemanticSearch.Client.ApiException(400, "Missing required parameter 'indexName' when calling IndexApi->IndexIndexNameDocumentsDocIdDelete");
-            }
-
-            // verify the required parameter 'docId' is set
-            if (docId == null)
-            {
-                throw new LSO.SemanticSearch.Client.ApiException(400, "Missing required parameter 'docId' when calling IndexApi->IndexIndexNameDocumentsDocIdDelete");
-            }
-
-            LSO.SemanticSearch.Client.RequestOptions localVarRequestOptions = new LSO.SemanticSearch.Client.RequestOptions();
-
-            string[] _contentTypes = new string[] {
-            };
-
-            // to determine the Accept header
-            string[] _accepts = new string[] {
-                "application/json"
-            };
-
-            var localVarContentType = LSO.SemanticSearch.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-            }
-
-            var localVarAccept = LSO.SemanticSearch.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-            }
-
-            localVarRequestOptions.PathParameters.Add("index_name", LSO.SemanticSearch.Client.ClientUtils.ParameterToString(indexName)); // path parameter
-            localVarRequestOptions.PathParameters.Add("doc_id", LSO.SemanticSearch.Client.ClientUtils.ParameterToString(docId)); // path parameter
-
-            localVarRequestOptions.Operation = "IndexApi.IndexIndexNameDocumentsDocIdDelete";
-            localVarRequestOptions.OperationIndex = operationIndex;
-
-
-            // make the HTTP request
-            var localVarResponse = this.Client.Delete<Object>("/index/{index_name}/documents/{doc_id}", localVarRequestOptions, this.Configuration);
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("IndexIndexNameDocumentsDocIdDelete", localVarResponse);
-                if (_exception != null)
-                {
-                    throw _exception;
-                }
-            }
-
-            return localVarResponse;
-        }
-
-        /// <summary>
-        ///  Delete an indexed documents.
-        /// </summary>
-        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="indexName"></param>
-        /// <param name="docId"></param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task IndexIndexNameDocumentsDocIdDeleteAsync(string indexName, string docId, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            await IndexIndexNameDocumentsDocIdDeleteWithHttpInfoAsync(indexName, docId, operationIndex, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        ///  Delete an indexed documents.
-        /// </summary>
-        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="indexName"></param>
-        /// <param name="docId"></param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LSO.SemanticSearch.Client.ApiResponse<Object>> IndexIndexNameDocumentsDocIdDeleteWithHttpInfoAsync(string indexName, string docId, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            // verify the required parameter 'indexName' is set
-            if (indexName == null)
-            {
-                throw new LSO.SemanticSearch.Client.ApiException(400, "Missing required parameter 'indexName' when calling IndexApi->IndexIndexNameDocumentsDocIdDelete");
-            }
-
-            // verify the required parameter 'docId' is set
-            if (docId == null)
-            {
-                throw new LSO.SemanticSearch.Client.ApiException(400, "Missing required parameter 'docId' when calling IndexApi->IndexIndexNameDocumentsDocIdDelete");
-            }
-
-
-            LSO.SemanticSearch.Client.RequestOptions localVarRequestOptions = new LSO.SemanticSearch.Client.RequestOptions();
-
-            string[] _contentTypes = new string[] {
-            };
-
-            // to determine the Accept header
-            string[] _accepts = new string[] {
-                "application/json"
-            };
-
-            var localVarContentType = LSO.SemanticSearch.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-            }
-
-            var localVarAccept = LSO.SemanticSearch.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-            }
-
-            localVarRequestOptions.PathParameters.Add("index_name", LSO.SemanticSearch.Client.ClientUtils.ParameterToString(indexName)); // path parameter
-            localVarRequestOptions.PathParameters.Add("doc_id", LSO.SemanticSearch.Client.ClientUtils.ParameterToString(docId)); // path parameter
-
-            localVarRequestOptions.Operation = "IndexApi.IndexIndexNameDocumentsDocIdDelete";
-            localVarRequestOptions.OperationIndex = operationIndex;
-
-
-            // make the HTTP request
-            var localVarResponse = await this.AsynchronousClient.DeleteAsync<Object>("/index/{index_name}/documents/{doc_id}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
-
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("IndexIndexNameDocumentsDocIdDelete", localVarResponse);
-                if (_exception != null)
-                {
-                    throw _exception;
-                }
-            }
-
-            return localVarResponse;
-        }
-
-        /// <summary>
         ///  Trigger indexing of document information.
         /// </summary>
         /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
@@ -857,9 +417,9 @@ namespace LSO.SemanticSearch.Api
         /// <param name="createDocumentRequest"> (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns></returns>
-        public void IndexIndexNameDocumentsPost(string indexName, string docId, CreateDocumentRequest? createDocumentRequest = default(CreateDocumentRequest?), int operationIndex = 0)
+        public void CreateDocument(string indexName, string docId, CreateDocumentRequest? createDocumentRequest = default(CreateDocumentRequest?), int operationIndex = 0)
         {
-            IndexIndexNameDocumentsPostWithHttpInfo(indexName, docId, createDocumentRequest);
+            CreateDocumentWithHttpInfo(indexName, docId, createDocumentRequest);
         }
 
         /// <summary>
@@ -871,18 +431,18 @@ namespace LSO.SemanticSearch.Api
         /// <param name="createDocumentRequest"> (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        public LSO.SemanticSearch.Client.ApiResponse<Object> IndexIndexNameDocumentsPostWithHttpInfo(string indexName, string docId, CreateDocumentRequest? createDocumentRequest = default(CreateDocumentRequest?), int operationIndex = 0)
+        public LSO.SemanticSearch.Client.ApiResponse<Object> CreateDocumentWithHttpInfo(string indexName, string docId, CreateDocumentRequest? createDocumentRequest = default(CreateDocumentRequest?), int operationIndex = 0)
         {
             // verify the required parameter 'indexName' is set
             if (indexName == null)
             {
-                throw new LSO.SemanticSearch.Client.ApiException(400, "Missing required parameter 'indexName' when calling IndexApi->IndexIndexNameDocumentsPost");
+                throw new LSO.SemanticSearch.Client.ApiException(400, "Missing required parameter 'indexName' when calling IndexApi->CreateDocument");
             }
 
             // verify the required parameter 'docId' is set
             if (docId == null)
             {
-                throw new LSO.SemanticSearch.Client.ApiException(400, "Missing required parameter 'docId' when calling IndexApi->IndexIndexNameDocumentsPost");
+                throw new LSO.SemanticSearch.Client.ApiException(400, "Missing required parameter 'docId' when calling IndexApi->CreateDocument");
             }
 
             LSO.SemanticSearch.Client.RequestOptions localVarRequestOptions = new LSO.SemanticSearch.Client.RequestOptions();
@@ -912,7 +472,7 @@ namespace LSO.SemanticSearch.Api
             localVarRequestOptions.PathParameters.Add("doc_id", LSO.SemanticSearch.Client.ClientUtils.ParameterToString(docId)); // path parameter
             localVarRequestOptions.Data = createDocumentRequest;
 
-            localVarRequestOptions.Operation = "IndexApi.IndexIndexNameDocumentsPost";
+            localVarRequestOptions.Operation = "IndexApi.CreateDocument";
             localVarRequestOptions.OperationIndex = operationIndex;
 
 
@@ -920,7 +480,7 @@ namespace LSO.SemanticSearch.Api
             var localVarResponse = this.Client.Post<Object>("/index/{index_name}/documents", localVarRequestOptions, this.Configuration);
             if (this.ExceptionFactory != null)
             {
-                Exception _exception = this.ExceptionFactory("IndexIndexNameDocumentsPost", localVarResponse);
+                Exception _exception = this.ExceptionFactory("CreateDocument", localVarResponse);
                 if (_exception != null)
                 {
                     throw _exception;
@@ -940,9 +500,9 @@ namespace LSO.SemanticSearch.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task IndexIndexNameDocumentsPostAsync(string indexName, string docId, CreateDocumentRequest? createDocumentRequest = default(CreateDocumentRequest?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task CreateDocumentAsync(string indexName, string docId, CreateDocumentRequest? createDocumentRequest = default(CreateDocumentRequest?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            await IndexIndexNameDocumentsPostWithHttpInfoAsync(indexName, docId, createDocumentRequest, operationIndex, cancellationToken).ConfigureAwait(false);
+            await CreateDocumentWithHttpInfoAsync(indexName, docId, createDocumentRequest, operationIndex, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -955,18 +515,18 @@ namespace LSO.SemanticSearch.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LSO.SemanticSearch.Client.ApiResponse<Object>> IndexIndexNameDocumentsPostWithHttpInfoAsync(string indexName, string docId, CreateDocumentRequest? createDocumentRequest = default(CreateDocumentRequest?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<LSO.SemanticSearch.Client.ApiResponse<Object>> CreateDocumentWithHttpInfoAsync(string indexName, string docId, CreateDocumentRequest? createDocumentRequest = default(CreateDocumentRequest?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'indexName' is set
             if (indexName == null)
             {
-                throw new LSO.SemanticSearch.Client.ApiException(400, "Missing required parameter 'indexName' when calling IndexApi->IndexIndexNameDocumentsPost");
+                throw new LSO.SemanticSearch.Client.ApiException(400, "Missing required parameter 'indexName' when calling IndexApi->CreateDocument");
             }
 
             // verify the required parameter 'docId' is set
             if (docId == null)
             {
-                throw new LSO.SemanticSearch.Client.ApiException(400, "Missing required parameter 'docId' when calling IndexApi->IndexIndexNameDocumentsPost");
+                throw new LSO.SemanticSearch.Client.ApiException(400, "Missing required parameter 'docId' when calling IndexApi->CreateDocument");
             }
 
 
@@ -997,7 +557,7 @@ namespace LSO.SemanticSearch.Api
             localVarRequestOptions.PathParameters.Add("doc_id", LSO.SemanticSearch.Client.ClientUtils.ParameterToString(docId)); // path parameter
             localVarRequestOptions.Data = createDocumentRequest;
 
-            localVarRequestOptions.Operation = "IndexApi.IndexIndexNameDocumentsPost";
+            localVarRequestOptions.Operation = "IndexApi.CreateDocument";
             localVarRequestOptions.OperationIndex = operationIndex;
 
 
@@ -1006,7 +566,7 @@ namespace LSO.SemanticSearch.Api
 
             if (this.ExceptionFactory != null)
             {
-                Exception _exception = this.ExceptionFactory("IndexIndexNameDocumentsPost", localVarResponse);
+                Exception _exception = this.ExceptionFactory("CreateDocument", localVarResponse);
                 if (_exception != null)
                 {
                     throw _exception;
@@ -1023,9 +583,9 @@ namespace LSO.SemanticSearch.Api
         /// <param name="createIndexRequest">The index definition. (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>IndexResponse</returns>
-        public IndexResponse IndexPost(CreateIndexRequest? createIndexRequest = default(CreateIndexRequest?), int operationIndex = 0)
+        public IndexResponse CreateIndex(CreateIndexRequest? createIndexRequest = default(CreateIndexRequest?), int operationIndex = 0)
         {
-            LSO.SemanticSearch.Client.ApiResponse<IndexResponse> localVarResponse = IndexPostWithHttpInfo(createIndexRequest);
+            LSO.SemanticSearch.Client.ApiResponse<IndexResponse> localVarResponse = CreateIndexWithHttpInfo(createIndexRequest);
             return localVarResponse.Data;
         }
 
@@ -1036,7 +596,7 @@ namespace LSO.SemanticSearch.Api
         /// <param name="createIndexRequest">The index definition. (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of IndexResponse</returns>
-        public LSO.SemanticSearch.Client.ApiResponse<IndexResponse> IndexPostWithHttpInfo(CreateIndexRequest? createIndexRequest = default(CreateIndexRequest?), int operationIndex = 0)
+        public LSO.SemanticSearch.Client.ApiResponse<IndexResponse> CreateIndexWithHttpInfo(CreateIndexRequest? createIndexRequest = default(CreateIndexRequest?), int operationIndex = 0)
         {
             LSO.SemanticSearch.Client.RequestOptions localVarRequestOptions = new LSO.SemanticSearch.Client.RequestOptions();
 
@@ -1063,7 +623,7 @@ namespace LSO.SemanticSearch.Api
 
             localVarRequestOptions.Data = createIndexRequest;
 
-            localVarRequestOptions.Operation = "IndexApi.IndexPost";
+            localVarRequestOptions.Operation = "IndexApi.CreateIndex";
             localVarRequestOptions.OperationIndex = operationIndex;
 
 
@@ -1071,7 +631,7 @@ namespace LSO.SemanticSearch.Api
             var localVarResponse = this.Client.Post<IndexResponse>("/index", localVarRequestOptions, this.Configuration);
             if (this.ExceptionFactory != null)
             {
-                Exception _exception = this.ExceptionFactory("IndexPost", localVarResponse);
+                Exception _exception = this.ExceptionFactory("CreateIndex", localVarResponse);
                 if (_exception != null)
                 {
                     throw _exception;
@@ -1089,9 +649,9 @@ namespace LSO.SemanticSearch.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of IndexResponse</returns>
-        public async System.Threading.Tasks.Task<IndexResponse> IndexPostAsync(CreateIndexRequest? createIndexRequest = default(CreateIndexRequest?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<IndexResponse> CreateIndexAsync(CreateIndexRequest? createIndexRequest = default(CreateIndexRequest?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            LSO.SemanticSearch.Client.ApiResponse<IndexResponse> localVarResponse = await IndexPostWithHttpInfoAsync(createIndexRequest, operationIndex, cancellationToken).ConfigureAwait(false);
+            LSO.SemanticSearch.Client.ApiResponse<IndexResponse> localVarResponse = await CreateIndexWithHttpInfoAsync(createIndexRequest, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1103,7 +663,7 @@ namespace LSO.SemanticSearch.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (IndexResponse)</returns>
-        public async System.Threading.Tasks.Task<LSO.SemanticSearch.Client.ApiResponse<IndexResponse>> IndexPostWithHttpInfoAsync(CreateIndexRequest? createIndexRequest = default(CreateIndexRequest?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<LSO.SemanticSearch.Client.ApiResponse<IndexResponse>> CreateIndexWithHttpInfoAsync(CreateIndexRequest? createIndexRequest = default(CreateIndexRequest?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
 
             LSO.SemanticSearch.Client.RequestOptions localVarRequestOptions = new LSO.SemanticSearch.Client.RequestOptions();
@@ -1131,7 +691,7 @@ namespace LSO.SemanticSearch.Api
 
             localVarRequestOptions.Data = createIndexRequest;
 
-            localVarRequestOptions.Operation = "IndexApi.IndexPost";
+            localVarRequestOptions.Operation = "IndexApi.CreateIndex";
             localVarRequestOptions.OperationIndex = operationIndex;
 
 
@@ -1140,7 +700,447 @@ namespace LSO.SemanticSearch.Api
 
             if (this.ExceptionFactory != null)
             {
-                Exception _exception = this.ExceptionFactory("IndexPost", localVarResponse);
+                Exception _exception = this.ExceptionFactory("CreateIndex", localVarResponse);
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        ///  Delete an indexed documents.
+        /// </summary>
+        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="indexName"></param>
+        /// <param name="docId"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns></returns>
+        public void DeleteDocument(string indexName, string docId, int operationIndex = 0)
+        {
+            DeleteDocumentWithHttpInfo(indexName, docId);
+        }
+
+        /// <summary>
+        ///  Delete an indexed documents.
+        /// </summary>
+        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="indexName"></param>
+        /// <param name="docId"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>ApiResponse of Object(void)</returns>
+        public LSO.SemanticSearch.Client.ApiResponse<Object> DeleteDocumentWithHttpInfo(string indexName, string docId, int operationIndex = 0)
+        {
+            // verify the required parameter 'indexName' is set
+            if (indexName == null)
+            {
+                throw new LSO.SemanticSearch.Client.ApiException(400, "Missing required parameter 'indexName' when calling IndexApi->DeleteDocument");
+            }
+
+            // verify the required parameter 'docId' is set
+            if (docId == null)
+            {
+                throw new LSO.SemanticSearch.Client.ApiException(400, "Missing required parameter 'docId' when calling IndexApi->DeleteDocument");
+            }
+
+            LSO.SemanticSearch.Client.RequestOptions localVarRequestOptions = new LSO.SemanticSearch.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+            var localVarContentType = LSO.SemanticSearch.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
+
+            var localVarAccept = LSO.SemanticSearch.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
+
+            localVarRequestOptions.PathParameters.Add("index_name", LSO.SemanticSearch.Client.ClientUtils.ParameterToString(indexName)); // path parameter
+            localVarRequestOptions.PathParameters.Add("doc_id", LSO.SemanticSearch.Client.ClientUtils.ParameterToString(docId)); // path parameter
+
+            localVarRequestOptions.Operation = "IndexApi.DeleteDocument";
+            localVarRequestOptions.OperationIndex = operationIndex;
+
+
+            // make the HTTP request
+            var localVarResponse = this.Client.Delete<Object>("/index/{index_name}/documents/{doc_id}", localVarRequestOptions, this.Configuration);
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("DeleteDocument", localVarResponse);
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        ///  Delete an indexed documents.
+        /// </summary>
+        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="indexName"></param>
+        /// <param name="docId"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of void</returns>
+        public async System.Threading.Tasks.Task DeleteDocumentAsync(string indexName, string docId, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            await DeleteDocumentWithHttpInfoAsync(indexName, docId, operationIndex, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        ///  Delete an indexed documents.
+        /// </summary>
+        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="indexName"></param>
+        /// <param name="docId"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse</returns>
+        public async System.Threading.Tasks.Task<LSO.SemanticSearch.Client.ApiResponse<Object>> DeleteDocumentWithHttpInfoAsync(string indexName, string docId, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            // verify the required parameter 'indexName' is set
+            if (indexName == null)
+            {
+                throw new LSO.SemanticSearch.Client.ApiException(400, "Missing required parameter 'indexName' when calling IndexApi->DeleteDocument");
+            }
+
+            // verify the required parameter 'docId' is set
+            if (docId == null)
+            {
+                throw new LSO.SemanticSearch.Client.ApiException(400, "Missing required parameter 'docId' when calling IndexApi->DeleteDocument");
+            }
+
+
+            LSO.SemanticSearch.Client.RequestOptions localVarRequestOptions = new LSO.SemanticSearch.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+            var localVarContentType = LSO.SemanticSearch.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
+
+            var localVarAccept = LSO.SemanticSearch.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
+
+            localVarRequestOptions.PathParameters.Add("index_name", LSO.SemanticSearch.Client.ClientUtils.ParameterToString(indexName)); // path parameter
+            localVarRequestOptions.PathParameters.Add("doc_id", LSO.SemanticSearch.Client.ClientUtils.ParameterToString(docId)); // path parameter
+
+            localVarRequestOptions.Operation = "IndexApi.DeleteDocument";
+            localVarRequestOptions.OperationIndex = operationIndex;
+
+
+            // make the HTTP request
+            var localVarResponse = await this.AsynchronousClient.DeleteAsync<Object>("/index/{index_name}/documents/{doc_id}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("DeleteDocument", localVarResponse);
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        ///  Delete an entire index
+        /// </summary>
+        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="indexName"></param>
+        /// <param name="force">If set to \&quot;true\&quot;, delete index even if it is not empty. (optional, default to false)</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns></returns>
+        public void DeleteIndex(string indexName, string? force = default(string?), int operationIndex = 0)
+        {
+            DeleteIndexWithHttpInfo(indexName, force);
+        }
+
+        /// <summary>
+        ///  Delete an entire index
+        /// </summary>
+        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="indexName"></param>
+        /// <param name="force">If set to \&quot;true\&quot;, delete index even if it is not empty. (optional, default to false)</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>ApiResponse of Object(void)</returns>
+        public LSO.SemanticSearch.Client.ApiResponse<Object> DeleteIndexWithHttpInfo(string indexName, string? force = default(string?), int operationIndex = 0)
+        {
+            // verify the required parameter 'indexName' is set
+            if (indexName == null)
+            {
+                throw new LSO.SemanticSearch.Client.ApiException(400, "Missing required parameter 'indexName' when calling IndexApi->DeleteIndex");
+            }
+
+            LSO.SemanticSearch.Client.RequestOptions localVarRequestOptions = new LSO.SemanticSearch.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+            var localVarContentType = LSO.SemanticSearch.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
+
+            var localVarAccept = LSO.SemanticSearch.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
+
+            localVarRequestOptions.PathParameters.Add("index_name", LSO.SemanticSearch.Client.ClientUtils.ParameterToString(indexName)); // path parameter
+            if (force != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LSO.SemanticSearch.Client.ClientUtils.ParameterToMultiMap("", "force", force));
+            }
+
+            localVarRequestOptions.Operation = "IndexApi.DeleteIndex";
+            localVarRequestOptions.OperationIndex = operationIndex;
+
+
+            // make the HTTP request
+            var localVarResponse = this.Client.Delete<Object>("/index/{index_name}", localVarRequestOptions, this.Configuration);
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("DeleteIndex", localVarResponse);
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        ///  Delete an entire index
+        /// </summary>
+        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="indexName"></param>
+        /// <param name="force">If set to \&quot;true\&quot;, delete index even if it is not empty. (optional, default to false)</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of void</returns>
+        public async System.Threading.Tasks.Task DeleteIndexAsync(string indexName, string? force = default(string?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            await DeleteIndexWithHttpInfoAsync(indexName, force, operationIndex, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        ///  Delete an entire index
+        /// </summary>
+        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="indexName"></param>
+        /// <param name="force">If set to \&quot;true\&quot;, delete index even if it is not empty. (optional, default to false)</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse</returns>
+        public async System.Threading.Tasks.Task<LSO.SemanticSearch.Client.ApiResponse<Object>> DeleteIndexWithHttpInfoAsync(string indexName, string? force = default(string?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            // verify the required parameter 'indexName' is set
+            if (indexName == null)
+            {
+                throw new LSO.SemanticSearch.Client.ApiException(400, "Missing required parameter 'indexName' when calling IndexApi->DeleteIndex");
+            }
+
+
+            LSO.SemanticSearch.Client.RequestOptions localVarRequestOptions = new LSO.SemanticSearch.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+            var localVarContentType = LSO.SemanticSearch.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
+
+            var localVarAccept = LSO.SemanticSearch.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
+
+            localVarRequestOptions.PathParameters.Add("index_name", LSO.SemanticSearch.Client.ClientUtils.ParameterToString(indexName)); // path parameter
+            if (force != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(LSO.SemanticSearch.Client.ClientUtils.ParameterToMultiMap("", "force", force));
+            }
+
+            localVarRequestOptions.Operation = "IndexApi.DeleteIndex";
+            localVarRequestOptions.OperationIndex = operationIndex;
+
+
+            // make the HTTP request
+            var localVarResponse = await this.AsynchronousClient.DeleteAsync<Object>("/index/{index_name}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("DeleteIndex", localVarResponse);
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        ///  List all indices
+        /// </summary>
+        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>ListAllIndicesResponse</returns>
+        public ListAllIndicesResponse ListIndices(int operationIndex = 0)
+        {
+            LSO.SemanticSearch.Client.ApiResponse<ListAllIndicesResponse> localVarResponse = ListIndicesWithHttpInfo();
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        ///  List all indices
+        /// </summary>
+        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>ApiResponse of ListAllIndicesResponse</returns>
+        public LSO.SemanticSearch.Client.ApiResponse<ListAllIndicesResponse> ListIndicesWithHttpInfo(int operationIndex = 0)
+        {
+            LSO.SemanticSearch.Client.RequestOptions localVarRequestOptions = new LSO.SemanticSearch.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+            var localVarContentType = LSO.SemanticSearch.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
+
+            var localVarAccept = LSO.SemanticSearch.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
+
+
+            localVarRequestOptions.Operation = "IndexApi.ListIndices";
+            localVarRequestOptions.OperationIndex = operationIndex;
+
+
+            // make the HTTP request
+            var localVarResponse = this.Client.Get<ListAllIndicesResponse>("/index", localVarRequestOptions, this.Configuration);
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("ListIndices", localVarResponse);
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        ///  List all indices
+        /// </summary>
+        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ListAllIndicesResponse</returns>
+        public async System.Threading.Tasks.Task<ListAllIndicesResponse> ListIndicesAsync(int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            LSO.SemanticSearch.Client.ApiResponse<ListAllIndicesResponse> localVarResponse = await ListIndicesWithHttpInfoAsync(operationIndex, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        ///  List all indices
+        /// </summary>
+        /// <exception cref="LSO.SemanticSearch.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (ListAllIndicesResponse)</returns>
+        public async System.Threading.Tasks.Task<LSO.SemanticSearch.Client.ApiResponse<ListAllIndicesResponse>> ListIndicesWithHttpInfoAsync(int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+
+            LSO.SemanticSearch.Client.RequestOptions localVarRequestOptions = new LSO.SemanticSearch.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+            var localVarContentType = LSO.SemanticSearch.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
+
+            var localVarAccept = LSO.SemanticSearch.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
+
+
+            localVarRequestOptions.Operation = "IndexApi.ListIndices";
+            localVarRequestOptions.OperationIndex = operationIndex;
+
+
+            // make the HTTP request
+            var localVarResponse = await this.AsynchronousClient.GetAsync<ListAllIndicesResponse>("/index", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("ListIndices", localVarResponse);
                 if (_exception != null)
                 {
                     throw _exception;

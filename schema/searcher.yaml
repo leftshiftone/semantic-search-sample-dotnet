@@ -1,0 +1,301 @@
+openapi: 3.0.3
+info:
+  title: Semantic Search - Searcher HTTP API
+  version: 1.4.0
+  description: |
+    The searcher component HTTP API of the semantic search Service.
+
+    The service depends on a database backend. If a mere vector store (e.g. [Qdrant](https://qdrant.tech/)), instead of a full fledged search engine (e.g. [Elasticsearch](https://www.elastic.co/)), is configured, some advanced functionalities of the API have no effect. This is noted where appropriate, referring to the former as _simple database_ and the latter as _full database_.
+  contact:
+    email: contact@leftshift.one
+servers:
+  - url: /api/v1
+
+tags:
+  - name: Search
+    description: Search endpoints
+paths:
+  /search/{index_name}:
+    post:
+      tags:
+        - Search
+      description: Search for documents
+      operationId: searchIndex
+      parameters:
+        - $ref: '#/components/parameters/path_index_name'
+      requestBody:
+        description: The search query.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchQueryRequest'
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResultsResponse'
+        '500':
+          $ref: '#/components/responses/Unexpected'
+components:
+  parameters:
+    path_index_name:
+      name: index_name
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    BadRequest:
+      description: The provided input was wrong.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: The specified resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unexpected:
+      description: An unexpected error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  schemas:
+    SearchQueryRequest:
+      required:
+        - text_queries
+      type: object
+      properties:
+        text_queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/TextQuery'
+          description: |
+            The main text queries. A combination of semantic and full text search is performed depending on the settings.
+
+            > **_NOTE:_**  For simple database backends, only a single semantic query against the default content_text_ field is performed at the moment.
+        filter_queries:
+          type: array
+          items:
+            anyOf:
+              - $ref: '#/components/schemas/KeyValueFilter'
+              - $ref: '#/components/schemas/DateFilter'
+          description: |
+            A list of filters.
+        filter_query:
+          type: string
+          default: ""
+          description: |
+            The filter query. It can be any Elasticsearch [query string syntax](https://www.elastic.co/guide/en/elasticsearch/reference/7.17/query-dsl-query-string-query.html#query-string-syntax). Beside explicit meta data field, all default fields can be used as well: document_id_, content_text_, content_json_.
+
+            > **_NOTE:_**  This only affects full database backends and will be replaced by the filter_queries parameter in the future.
+        offset:
+          type: integer
+          format: int64
+          default: 0
+          description: The count of results which should be omitted.
+        limit:
+          type: integer
+          format: int64
+          default: 10
+          minimum: 1
+          maximum: 100
+          description: The number of results to retrieve.
+        min_score:
+          type: number
+          default: 0.5
+          minimum: 0
+          maximum: 1
+          description: The minimum score of the obtained results. Any score below this threshold will not be returned.
+        is_distinct:
+          type: boolean
+          default: false
+          description: If set to true, only the highest scoring result for each indexed document is returned. If set to false, the same indexed document might yield multiple hits.
+        search_settings:
+          $ref: '#/components/schemas/SearchSettings'
+        preprocessor_settings:
+          $ref: '#/components/schemas/PreprocessorSettings'
+        postprocessor_settings:
+          $ref: '#/components/schemas/PostprocessorSettings'
+    SearchResultsResponse:
+      required:
+        - total
+        - elements
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int64
+        elements:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchResultResponse'
+    SearchResultResponse:
+      required:
+        - id
+        - raw_id
+        - score
+        - data
+      type: object
+      properties:
+        id:
+          type: string
+          description: The identifier of the indexed document.
+        raw_id:
+          type: string
+          description: The identifier of the underlying indexed object.
+        score:
+          type: number
+          description: The relevance score of the search result.
+        data:
+          type: object
+          additionalProperties: {}
+    ErrorResponse:
+      required:
+        - message
+        - type
+      type: object
+      properties:
+        message:
+          description: The error message.
+          type: string
+        type:
+          description: The type of the error in the backend.
+          type: string
+    TextQuery:
+      type: object
+      properties:
+        field_name:
+          type: string
+          default: content_text_
+          description: The name of the indexed text field to be searched. The default value refers to the well known field 'content_text_', containing the document text content.
+        query:
+          type: string
+          description: The main search query for this field.
+        semantic_weight:
+          type: number
+          default: 1.0
+          minimum: 0
+          description: The weight multiplier for the semantic part of this query. If set to 0, no semantic search is performed for this field.
+        full_text_weight:
+          type: number
+          default: 1.0
+          minimum: 0
+          description: The weight multiplier for the full text search part of this query. If set to 0, no full text search is performed for this field.
+        fuzziness:
+          type: string
+          default: "AUTO"
+          enum:
+            - "0"
+            - "1"
+            - "2"
+            - "3"
+            - "AUTO"
+          description: >
+            The amount of fuzziness for the full text search part.
+              * 0, 1, 2, 3: Number of allowed edits.
+              * AUTO: Variable number of edits depending on token lengths.
+      description: The representation of a semantic as well as full text query.
+    KeyValueFilter:
+      type: object
+      description: A filter matching values in given fields.
+      properties:
+        field_name:
+          type: string
+          description:
+            "The name of the indexed field to be filtered. Nested fields in an object hierarchy are accessed with a '.' as separator, e.g. name.first_name."
+        value:
+          oneOf:
+            - type: boolean
+            - type: integer
+            - type: number
+            - type: string
+          description: The target value.
+        modal_type:
+          type: string
+          default: "MUST"
+          enum:
+            - "MUST"
+            - "MUSTNOT"
+          description: Wether the filter must (only documents matching the filter are returned) or must not hold (only documents not matching the filter are returned).
+    DateFilter:
+      type: object
+      description: A filter specifying a date range for the given field.
+      properties:
+        field_name:
+          type: string
+          description:
+            "The name of the indexed field to be filtered. Nested fields in a JSON structure are accessed with a '.' as separator, e.g. properties.date."
+        start:
+          type: string
+          default: "1900-01-01"
+          description: Start timestamp in any ISO 8601 compatible format.
+        end:
+          type: string
+          default: "2100-01-01"
+          description: End timestamp in any ISO 8601 compatible format.
+        modal_type:
+          type: string
+          default: "MUST"
+          enum:
+            - "MUST"
+            - "MUSTNOT"
+          description: Wether the filter must (only documents matching the filter are returned) or must not hold (only documents not matching the filter are returned).
+    SearchSettings:
+      type: object
+      properties:
+        global_semantic_score_weight:
+          type: number
+          default: 1.0
+          minimum: 0
+          description: The multiplicative weight for the semantic part of the score.
+        global_full_text_score_weight:
+          type: number
+          default: 1.0
+          minimum: 0
+          description: The multiplicative weight for the full text part of the score.
+        full_text_score_saturation:
+          type: number
+          default: 0
+          minimum: 0
+          description: The value in x / (value + x), to saturate the unbounded full text part of the score and to squeeze it into the interval [0,1). If the value is 0, no saturation is performed and the score is unbounded.
+      description: |
+        The settings to fine-tune the search behavior.
+
+        > **_NOTE:_**  For simple database backends, these settings have no effect at the moment.
+    PreprocessorSettings:
+      type: object
+      properties:
+        max_query_len:
+          type: integer
+          default: 0
+          minimum: 0
+          description: The maximum length of text queries. Longer queries will be truncated. If set to 0, no truncation will be performed.
+      description: The settings to control preprocessing of the raw query.
+    PostprocessorSettings:
+      type: object
+      properties:
+        normalizer_type:
+          type: string
+          default: "NO"
+          enum:
+            - "NO"
+            - "SIGMOID"
+          description: >
+            The type of score normalization to perform.
+              * NO: Do not perform any normalization and return the raw search scores.
+              * SIGMOID: Sigmoid based normalization in the interval (0, 1). Behavior can be tuned by setting an appropriate offset and scale.
+        normalizer_sigmoid_offset:
+          type: number
+          default: 0.5
+          description: The offset in 1 / ( 1 + exp(-(x-offset)/scale) ) used for the sigmoid normalizer.
+        normalizer_sigmoid_scale:
+          type: number
+          default: 1.0
+          description: The scale in 1 / ( 1 + exp(-(x-offset)/scale) ) used for the sigmoid normalizer.
+      description: The settings to control postprocessing of the raw search results.

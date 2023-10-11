@@ -23,8 +23,7 @@ namespace semantic_search_sample_dotnet
             var indexerClient = new IndexApi(indexerConf);
            
             var minio = MinioUtil.InitClient("localhost:9000", "admin", "adminadmin");
-            
-            var indexName = "test";
+            var indexName = "example";
             
             // create Index
             try
@@ -40,7 +39,11 @@ namespace semantic_search_sample_dotnet
 
             // index the document
             // searching in ./test/*
-            await IndexDocument(indexName, "test.pdf", minio, indexerClient);
+            await IndexDocument(indexName, "Bärlauch.docx", minio, indexerClient);
+            await IndexDocument(indexName, "Heilpflanze.docx", minio, indexerClient);
+            await IndexDocument(indexName, "Knoblauch.docx", minio, indexerClient);
+            await IndexDocument(indexName, "Schnittlauch.docx", minio, indexerClient);
+            await IndexDocument(indexName, "Zwiebel.docx", minio, indexerClient);
            
             // Search the index
             var searchRequest = new SearchQueryRequest(new List<TextQuery>
@@ -72,10 +75,19 @@ namespace semantic_search_sample_dotnet
                     )    
                 ))
             );
-            await MinioUtil.UploadStringAsFile(meta.ToString(), $"{documentId}/__meta__.json", indexName, minio);
+            await MinioUtil.UploadStringAsFile(meta.ToString(),
+                $"{documentId}/__meta__.json",
+                indexName,
+                minio
+            );
             
             // Upload the file to index
-            await MinioUtil.UploadFile($"test/{fileName}", $"{documentId}/{fileName}", indexName, minio);
+            await MinioUtil.UploadFile(
+                $"test/{fileName}",
+                $"{documentId}/{fileName}",
+                indexName,
+                minio
+            );
 
             
             // Start the indexing

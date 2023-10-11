@@ -29,7 +29,10 @@ namespace semantic_search_sample_dotnet
             try
             {
                 await indexerClient.CreateIndexAsync(new CreateIndexRequest(
-                    indexName, new List<IndexFieldMapping>()
+                    indexName, new List<IndexFieldMapping>
+                    {
+                        new("enabled", IndexFieldMapping.TypeEnum.BOOLEAN) 
+                    }
                 ));
             }
             catch (Exception e)
@@ -50,24 +53,25 @@ namespace semantic_search_sample_dotnet
             {
                 new()
                 {
-                    Query = "Ist das arbeitsumfeld flexibel?",
+                    Query = "Wofür wird knoblauch verwendet?",
                     SemanticWeight = 1,
-                    FullTextWeight = 0,
+                    FullTextWeight = 1,
                 }
-            }, minScore: 0.05M);
+            }, minScore: 1M);
             
             var results = await searchClient.SearchIndexAsync(indexName, searchRequest);
             Console.WriteLine(results.ToJson());
         }
 
-        
         static async Task IndexDocument(string indexName, string fileName, IMinioClient minio, IndexApi indexer)
         {
             var documentId = Guid.NewGuid();
             
             // create and upload the __meta__.json
             var meta = new JObject(
-                new JProperty("meta", new JObject()),
+                new JProperty("meta", new JObject(
+                    new JProperty("enabled", true)
+                )),
                 new JProperty("files", new JArray(
                     new JObject(
                         new JProperty("meta", new JObject()),
@@ -88,7 +92,6 @@ namespace semantic_search_sample_dotnet
                 indexName,
                 minio
             );
-
             
             // Start the indexing
             await indexer.CreateDocumentAsync(

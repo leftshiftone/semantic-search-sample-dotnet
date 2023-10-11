@@ -31,7 +31,8 @@ namespace semantic_search_sample_dotnet
                 await indexerClient.CreateIndexAsync(new CreateIndexRequest(
                     indexName, new List<IndexFieldMapping>
                     {
-                        new("enabled", IndexFieldMapping.TypeEnum.BOOLEAN) 
+                        new("enabled", IndexFieldMapping.TypeEnum.BOOLEAN),
+                        new("type", IndexFieldMapping.TypeEnum.TEXT)
                     }
                 ));
             }
@@ -57,7 +58,15 @@ namespace semantic_search_sample_dotnet
                     SemanticWeight = 1,
                     FullTextWeight = 1,
                 }
-            }, minScore: 1M);
+            }, /*new List<SearchQueryRequestFilterQueriesInner>
+                {
+                    new(new KeyValueFilter(
+                        "type",
+                        new KeyValueFilterValue(true),
+                        KeyValueFilter.ModalTypeEnum.MUST
+                    ))
+                }, */
+                limit:10, offset:0, minScore: 1M);
             
             var results = await searchClient.SearchIndexAsync(indexName, searchRequest);
             Console.WriteLine(results.ToJson());
@@ -70,7 +79,8 @@ namespace semantic_search_sample_dotnet
             // create and upload the __meta__.json
             var meta = new JObject(
                 new JProperty("meta", new JObject(
-                    new JProperty("enabled", true)
+                    new JProperty("enabled", true),
+                    new JProperty("type", "text")
                 )),
                 new JProperty("files", new JArray(
                     new JObject(
